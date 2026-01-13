@@ -91,15 +91,15 @@
           </label>
 
           <label class="block">
-            <span class="text-sm font-medium">LINE 或 Email（擇一，建議填）</span>
-            <input name="LINE 或 Email" class="mt-2 w-full rounded-xl border border-slate-300 px-3 py-2" />
+            <span class="text-sm font-medium">LINE 或 Email（擇一，必填）</span>
+            <input name="LINE 或 Email" requiredclass="mt-2 w-full rounded-xl border border-slate-300 px-3 py-2" />
           </label>
         </div>
 
         <div class="grid gap-4 md:grid-cols-2">
           <label class="block">
             <span class="text-sm font-medium">訊息來源</span>
-            <select name="訊息來源" class="mt-2 w-full rounded-xl border border-slate-300 px-3 py-2">
+            <select name="訊息來源" required class="mt-2 w-full rounded-xl border border-slate-300 px-3 py-2">
               <option value="">請選擇</option>
               <option>Facebook</option><option>Threads</option><option>Instagram</option>
               <option>LINE</option><option>朋友轉傳</option><option>海報／傳單</option><option>其他</option>
@@ -165,4 +165,5 @@
   </script>
 </body>
 </html>
+
 
