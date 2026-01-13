@@ -126,26 +126,7 @@
   </div>
 
   <script>
-    // ✅ 來源自動帶入：網址 ?src=fb / ig / threads / line / friend
-    function applySourceFromQuery() {
-      const params = new URLSearchParams(location.search);
-      const src = (params.get('src') || '').toLowerCase();
-
-      const srcMap = {
-        fb: 'Facebook',
-        ig: 'Instagram',
-        threads: 'Threads',
-        line: 'LINE',
-        friend: '朋友轉傳'
-      };
-
-      const sourceSelect = document.querySelector('select[name="訊息來源"]');
-      if (sourceSelect && srcMap[src]) {
-        sourceSelect.value = srcMap[src];
-      }
-    }
-
-    async function loadEvent() {
+     async function loadEvent() {
       const res = await fetch('/event.json', { cache: 'no-store' });
       const e = await res.json();
 
@@ -178,11 +159,10 @@
       const form = document.getElementById('signupForm');
       form.action = GAS_WEBAPP_URL;
 
-      // 放在最後，確保下拉選單已經存在
-      applySourceFromQuery();
-    }
+      }
 
     loadEvent().catch(console.error);
   </script>
 </body>
 </html>
+
