@@ -1,0 +1,350 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>活動報名</title>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <script>
+    const GAS_WEBAPP_URL = "<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>活動報名</title>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <script>
+    const GAS_WEBAPP_URL = "貼上你的GAS網址（.../exec）";
+    const THANKS_URL = "/thanks";
+    const PIXEL_ID = "貼上你的Pixel ID（可先留空）";
+  </script>
+
+  <!-- Meta Pixel（PageView） -->
+  <script>
+    (function loadPixel(){
+      if(!PIXEL_ID || PIXEL_ID.includes("貼上")) return;
+      !function(f,b,e,v,n,t,s){
+        if(f.fbq)return; n=f.fbq=function(){n.callMethod?
+        n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+        if(!f._fbq)f._fbq=n; n.push=n; n.loaded=!0; n.version='2.0';
+        n.queue=[]; t=b.createElement(e); t.async=!0;
+        t.src=v; s=b.getElementsByTagName(e)[0];
+        s.parentNode.insertBefore(t,s)
+      }(window, document,'script','https://connect.facebook.net/en_US/fbevents.js');
+      fbq('init', PIXEL_ID);
+      fbq('track', 'PageView');
+    })();
+  </script>
+</head>
+
+<body class="bg-slate-50 text-slate-900">
+  <div class="mx-auto max-w-4xl px-4 py-8">
+
+    <div class="mt-4 grid gap-6 md:grid-cols-5">
+      <div class="md:col-span-2">
+        <div class="overflow-hidden rounded-2xl shadow-sm ring-1 ring-slate-200 bg-white">
+          <img src="/assets/poster.jpg" alt="活動海報" class="h-full w-full object-cover" />
+        </div>
+      </div>
+
+      <div class="md:col-span-3">
+        <div class="rounded-2xl bg-white p-6 shadow-sm ring-1 ring-slate-200">
+          <h1 id="title" class="text-2xl font-semibold tracking-tight">載入中…</h1>
+          <p id="tagline" class="mt-2 text-slate-600"></p>
+
+          <div class="mt-5 grid gap-3 rounded-xl bg-slate-50 p-4 ring-1 ring-slate-200">
+            <div class="flex gap-3"><div class="w-16 text-slate-500">日期</div><div class="font-medium" id="date"></div></div>
+            <div class="flex gap-3"><div class="w-16 text-slate-500">時間</div><div class="font-medium" id="time"></div></div>
+            <div class="flex gap-3"><div class="w-16 text-slate-500">地點</div><div class="font-medium" id="place"></div></div>
+            <div class="flex gap-3" id="addrRow"><div class="w-16 text-slate-500">地址</div><div class="font-medium" id="addr"></div></div>
+            <div class="pt-2" id="mapRow">
+              <a id="mapLink" href="#" target="_blank"
+                 class="inline-flex items-center justify-center rounded-xl bg-slate-900 px-4 py-2 text-sm font-medium text-white hover:bg-slate-800">
+                開啟地圖
+              </a>
+            </div>
+          </div>
+
+          <ul id="notes" class="mt-5 list-disc space-y-2 pl-5 text-slate-700"></ul>
+          <div class="mt-4 text-sm text-slate-600" id="contact"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="mt-8 rounded-2xl bg-white p-6 shadow-sm ring-1 ring-slate-200">
+      <h2 class="text-lg font-semibold">報名表單</h2>
+      <p class="mt-1 text-sm text-slate-600">送出後會寫入 Google Sheet，並跳到成功頁。</p>
+
+      <form id="signupForm" class="mt-6 grid gap-4" method="post" action="">
+        <input type="hidden" name="活動代碼" id="event_id" />
+        <input type="hidden" name="活動名稱" id="event_name" />
+        <input type="hidden" name="成功頁網址" id="thanks_url" />
+
+        <div class="grid gap-4 md:grid-cols-2">
+          <label class="block">
+            <span class="text-sm font-medium">訂票人姓名（必填）</span>
+            <input name="訂票人姓名" required class="mt-2 w-full rounded-xl border border-slate-300 px-3 py-2" />
+          </label>
+
+          <label class="block">
+            <span class="text-sm font-medium">聯絡電話（必填）</span>
+            <input name="聯絡電話" required inputmode="tel" class="mt-2 w-full rounded-xl border border-slate-300 px-3 py-2" />
+            <div class="mt-1 text-xs text-slate-500">活動前 3–5 天會電話核對，通話後才算完成保留。</div>
+          </label>
+        </div>
+
+        <div class="grid gap-4 md:grid-cols-2">
+          <label class="block">
+            <span class="text-sm font-medium">票數（每人最多 2 張）（必填）</span>
+            <select name="票數" required class="mt-2 w-full rounded-xl border border-slate-300 px-3 py-2">
+              <option value="">請選擇</option><option>1</option><option>2</option>
+            </select>
+          </label>
+
+          <label class="block">
+            <span class="text-sm font-medium">LINE 或 Email（擇一，建議填）</span>
+            <input name="LINE 或 Email" class="mt-2 w-full rounded-xl border border-slate-300 px-3 py-2" />
+          </label>
+        </div>
+
+        <div class="grid gap-4 md:grid-cols-2">
+          <label class="block">
+            <span class="text-sm font-medium">訊息來源</span>
+            <select name="訊息來源" class="mt-2 w-full rounded-xl border border-slate-300 px-3 py-2">
+              <option value="">請選擇</option>
+              <option>Facebook</option><option>Threads</option><option>Instagram</option>
+              <option>LINE</option><option>朋友轉傳</option><option>海報／傳單</option><option>其他</option>
+            </select>
+          </label>
+
+          <label class="block">
+            <span class="text-sm font-medium">備註</span>
+            <input name="備註" class="mt-2 w-full rounded-xl border border-slate-300 px-3 py-2" />
+          </label>
+        </div>
+
+        <label class="flex items-start gap-3 rounded-xl bg-slate-50 p-4 ring-1 ring-slate-200">
+          <input type="checkbox" required class="mt-1 h-4 w-4" />
+          <span class="text-sm text-slate-700" id="agreeText">我同意名額有限之規則。</span>
+        </label>
+
+        <button id="submitBtn" type="submit"
+          class="mt-2 inline-flex w-full items-center justify-center rounded-xl bg-slate-900 px-4 py-3 text-sm font-semibold text-white hover:bg-slate-800">
+          送出報名
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    async function loadEvent() {
+      const res = await fetch('/event.json', { cache: 'no-store' });
+      const e = await res.json();
+
+      document.getElementById('title').textContent = e["活動名稱"] || '';
+      document.getElementById('tagline').textContent = e["一句話"] || '';
+      document.getElementById('date').textContent = e["日期"] || '';
+      document.getElementById('time').textContent = e["時間"] || '';
+      document.getElementById('place').textContent = e["地點"] || '';
+
+      const addr = e["地址"] || '';
+      if (!addr) document.getElementById('addrRow').classList.add('hidden');
+      document.getElementById('addr').textContent = addr;
+
+      const map = e["地圖連結"] || '';
+      if (!map) document.getElementById('mapRow').classList.add('hidden');
+      document.getElementById('mapLink').href = map || '#';
+
+      const notes = document.getElementById('notes');
+      notes.innerHTML = '';
+      (e["注意事項"] || []).forEach(t => {
+        const li = document.createElement('li');
+        li.textContent = t;
+        notes.appendChild(li);
+      });
+
+      const phone = e["聯絡電話"] || '';
+      document.getElementById('contact').textContent = phone ? `聯絡電話：${phone}` : '';
+
+      document.getElementById('event_id').value = e["活動代碼"] || '';
+      document.getElementById('event_name').value = e["活動名稱"] || '';
+      document.getElementById('thanks_url').value = location.origin + THANKS_URL;
+      document.getElementById('agreeText').textContent = e["規則同意文"] || '我同意名額有限之規則。';
+
+      const form = document.getElementById('signupForm');
+      form.action = GAS_WEBAPP_URL;
+    }
+
+    loadEvent();
+  </script>
+</body>
+</html>
+";
+    const THANKS_URL = "/thanks";
+    const PIXEL_ID = "貼上你的Pixel ID（可先留空）";
+  </script>
+
+  <!-- Meta Pixel（PageView） -->
+  <script>
+    (function loadPixel(){
+      if(!PIXEL_ID || PIXEL_ID.includes("貼上")) return;
+      !function(f,b,e,v,n,t,s){
+        if(f.fbq)return; n=f.fbq=function(){n.callMethod?
+        n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+        if(!f._fbq)f._fbq=n; n.push=n; n.loaded=!0; n.version='2.0';
+        n.queue=[]; t=b.createElement(e); t.async=!0;
+        t.src=v; s=b.getElementsByTagName(e)[0];
+        s.parentNode.insertBefore(t,s)
+      }(window, document,'script','https://connect.facebook.net/en_US/fbevents.js');
+      fbq('init', PIXEL_ID);
+      fbq('track', 'PageView');
+    })();
+  </script>
+</head>
+
+<body class="bg-slate-50 text-slate-900">
+  <div class="mx-auto max-w-4xl px-4 py-8">
+
+    <div class="mt-4 grid gap-6 md:grid-cols-5">
+      <div class="md:col-span-2">
+        <div class="overflow-hidden rounded-2xl shadow-sm ring-1 ring-slate-200 bg-white">
+          <img src="/assets/poster.jpg" alt="活動海報" class="h-full w-full object-cover" />
+        </div>
+      </div>
+
+      <div class="md:col-span-3">
+        <div class="rounded-2xl bg-white p-6 shadow-sm ring-1 ring-slate-200">
+          <h1 id="title" class="text-2xl font-semibold tracking-tight">載入中…</h1>
+          <p id="tagline" class="mt-2 text-slate-600"></p>
+
+          <div class="mt-5 grid gap-3 rounded-xl bg-slate-50 p-4 ring-1 ring-slate-200">
+            <div class="flex gap-3"><div class="w-16 text-slate-500">日期</div><div class="font-medium" id="date"></div></div>
+            <div class="flex gap-3"><div class="w-16 text-slate-500">時間</div><div class="font-medium" id="time"></div></div>
+            <div class="flex gap-3"><div class="w-16 text-slate-500">地點</div><div class="font-medium" id="place"></div></div>
+            <div class="flex gap-3" id="addrRow"><div class="w-16 text-slate-500">地址</div><div class="font-medium" id="addr"></div></div>
+            <div class="pt-2" id="mapRow">
+              <a id="mapLink" href="#" target="_blank"
+                 class="inline-flex items-center justify-center rounded-xl bg-slate-900 px-4 py-2 text-sm font-medium text-white hover:bg-slate-800">
+                開啟地圖
+              </a>
+            </div>
+          </div>
+
+          <ul id="notes" class="mt-5 list-disc space-y-2 pl-5 text-slate-700"></ul>
+          <div class="mt-4 text-sm text-slate-600" id="contact"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="mt-8 rounded-2xl bg-white p-6 shadow-sm ring-1 ring-slate-200">
+      <h2 class="text-lg font-semibold">報名表單</h2>
+      <p class="mt-1 text-sm text-slate-600">送出後會寫入 Google Sheet，並跳到成功頁。</p>
+
+      <form id="signupForm" class="mt-6 grid gap-4" method="post" action="">
+        <input type="hidden" name="活動代碼" id="event_id" />
+        <input type="hidden" name="活動名稱" id="event_name" />
+        <input type="hidden" name="成功頁網址" id="thanks_url" />
+
+        <div class="grid gap-4 md:grid-cols-2">
+          <label class="block">
+            <span class="text-sm font-medium">訂票人姓名（必填）</span>
+            <input name="訂票人姓名" required class="mt-2 w-full rounded-xl border border-slate-300 px-3 py-2" />
+          </label>
+
+          <label class="block">
+            <span class="text-sm font-medium">聯絡電話（必填）</span>
+            <input name="聯絡電話" required inputmode="tel" class="mt-2 w-full rounded-xl border border-slate-300 px-3 py-2" />
+            <div class="mt-1 text-xs text-slate-500">活動前 3–5 天會電話核對，通話後才算完成保留。</div>
+          </label>
+        </div>
+
+        <div class="grid gap-4 md:grid-cols-2">
+          <label class="block">
+            <span class="text-sm font-medium">票數（每人最多 2 張）（必填）</span>
+            <select name="票數" required class="mt-2 w-full rounded-xl border border-slate-300 px-3 py-2">
+              <option value="">請選擇</option><option>1</option><option>2</option>
+            </select>
+          </label>
+
+          <label class="block">
+            <span class="text-sm font-medium">LINE 或 Email（擇一，建議填）</span>
+            <input name="LINE 或 Email" class="mt-2 w-full rounded-xl border border-slate-300 px-3 py-2" />
+          </label>
+        </div>
+
+        <div class="grid gap-4 md:grid-cols-2">
+          <label class="block">
+            <span class="text-sm font-medium">訊息來源</span>
+            <select name="訊息來源" class="mt-2 w-full rounded-xl border border-slate-300 px-3 py-2">
+              <option value="">請選擇</option>
+              <option>Facebook</option><option>Threads</option><option>Instagram</option>
+              <option>LINE</option><option>朋友轉傳</option><option>海報／傳單</option><option>其他</option>
+            </select>
+          </label>
+
+          <label class="block">
+            <span class="text-sm font-medium">備註</span>
+            <input name="備註" class="mt-2 w-full rounded-xl border border-slate-300 px-3 py-2" />
+          </label>
+        </div>
+
+        <label class="flex items-start gap-3 rounded-xl bg-slate-50 p-4 ring-1 ring-slate-200">
+          <input type="checkbox" required class="mt-1 h-4 w-4" />
+          <span class="text-sm text-slate-700" id="agreeText">我同意名額有限之規則。</span>
+        </label>
+
+        <button id="submitBtn" type="submit"
+          class="mt-2 inline-flex w-full items-center justify-center rounded-xl bg-slate-900 px-4 py-3 text-sm font-semibold text-white hover:bg-slate-800">
+          送出報名
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    async function loadEvent() {
+      const res = await fetch('/event.json', { cache: 'no-store' });
+      const e = await res.json();
+
+      document.getElementById('title').textContent = e["活動名稱"] || '';
+      document.getElementById('tagline').textContent = e["一句話"] || '';
+      document.getElementById('date').textContent = e["日期"] || '';
+      document.getElementById('time').textContent = e["時間"] || '';
+      document.getElementById('place').textContent = e["地點"] || '';
+
+      const addr = e["地址"] || '';
+      if (!addr) document.getElementById('addrRow').classList.add('hidden');
+      document.getElementById('addr').textContent = addr;
+
+      const map = e["地圖連結"] || '';
+      if (!map) document.getElementById('mapRow').classList.add('hidden');
+      document.getElementById('mapLink').href = map || '#';
+
+      const notes = document.getElementById('notes');
+      notes.innerHTML = '';
+      (e["注意事項"] || []).forEach(t => {
+        const li = document.createElement('li');
+        li.textContent = t;
+        notes.appendChild(li);
+      });
+
+      const phone = e["聯絡電話"] || '';
+      document.getElementById('contact').textContent = phone ? `聯絡電話：${phone}` : '';
+
+      document.getElementById('event_id').value = e["活動代碼"] || '';
+      document.getElementById('event_name').value = e["活動名稱"] || '';
+      document.getElementById('thanks_url').value = location.origin + THANKS_URL;
+      document.getElementById('agreeText').textContent = e["規則同意文"] || '我同意名額有限之規則。';
+
+      const form = document.getElementById('signupForm');
+      form.action = GAS_WEBAPP_URL;
+    }
+
+    loadEvent();
+  </script>
+</body>
+</html>
