@@ -5,17 +5,15 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>活動報名</title>
 
-  <!-- Tailwind CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
 
-  <!-- ✅ 只改這兩個就好：GAS_WEBAPP_URL / PIXEL_ID -->
   <script>
     const GAS_WEBAPP_URL = "https://script.google.com/macros/s/AKfycbzUsQFcWW-KCBKvdVQ9rLuWUBwn6vP09KdpN9ltvxJBtlGa1GmdGpxo9lbLqnofTUbG/exec";
     const THANKS_URL = "/thanks";
-    const PIXEL_ID = "1059276802371134"; // 你已經有了就放著
+    const PIXEL_ID = "1059276802371134";
   </script>
 
-  <!-- Meta Pixel（PageView）— PIXEL_ID 有填才會啟用 -->
+  <!-- Meta Pixel（PageView） -->
   <script>
     (function loadPixel(){
       if(!PIXEL_ID) return;
@@ -68,6 +66,7 @@
         <input type="hidden" name="活動代碼" id="event_id" />
         <input type="hidden" name="活動名稱" id="event_name" />
         <input type="hidden" name="成功頁網址" id="thanks_url" />
+        <input type="hidden" name="報名序號" id="reg_id" />
 
         <div class="grid gap-4 md:grid-cols-2">
           <label class="block">
@@ -98,7 +97,7 @@
 
         <div class="grid gap-4 md:grid-cols-2">
           <label class="block">
-            <span class="text-sm font-medium">訊息來源</span>
+            <span class="text-sm font-medium">訊息來源（必填）</span>
             <select name="訊息來源" required class="mt-2 w-full rounded-xl border border-slate-300 px-3 py-2">
               <option value="">請選擇</option>
               <option>Facebook</option><option>Threads</option><option>Instagram</option>
@@ -126,7 +125,31 @@
   </div>
 
   <script>
-     async function loadEvent() {
+    // 產生報名序號：TNN-XXXXXXXX
+    function makeRegId() {
+      const s = Math.random().toString(16).slice(2, 10).toUpperCase();
+      return `TNN-${s}`;
+    }
+
+    // 把 UTM / fbclid / referrer 收集成一段字，塞進備註（不需要分網址）
+    function getTrackingNote() {
+      const p = new URLSearchParams(location.search);
+      const keys = ["utm_source","utm_medium","utm_campaign","utm_content","utm_term","fbclid"];
+      const parts = [];
+
+      keys.forEach(k => {
+        const v = p.get(k);
+        if (v) parts.push(`${k}=${v}`);
+      });
+
+      const ref = document.referrer || "";
+      if (ref) parts.push(`ref=${ref}`);
+
+      if (parts.length === 0) return "";
+      return `【追蹤】${parts.join(";")}`;
+    }
+
+    async function loadEvent() {
       const res = await fetch('/event.json', { cache: 'no-store' });
       const e = await res.json();
 
@@ -155,56 +178,70 @@
       document.getElementById('event_name').value = e["活動名稱"] || '';
       document.getElementById('thanks_url').value = location.origin + THANKS_URL;
       document.getElementById('agreeText').textContent = e["規則同意文"] || '我同意名額有限之規則。';
+    }
 
+    // ✅ 背景送出，避免手機跳到 script.google.com 被擋；並防重複 + 帶序號 + UTM
+    function bindAjaxSubmitOnce() {
       const form = document.getElementById('signupForm');
-      
-      }
+      if (!form) return;
+      if (form.dataset.bound === "1") return;
+      form.dataset.bound = "1";
 
-    loadEvent().catch(console.error);
-    // ✅ 用 fetch 背景送出，避免手機跳到 script.google.com 被擋
-(function bindAjaxSubmitOnce(){
-  const form = document.getElementById('signupForm');
-  if (!form) return;
-  if (form.dataset.bound === "1") return; // 避免重複綁定
-  form.dataset.bound = "1";
+      form.addEventListener('submit', async (ev) => {
+        ev.preventDefault();
 
-  form.addEventListener('submit', async (ev) => {
-    ev.preventDefault();
+        // 防連點/重複送出
+        if (form.dataset.submitting === "1") return;
+        form.dataset.submitting = "1";
 
-    const btn = form.querySelector('button[type="submit"]');
-    if (btn) {
-      btn.disabled = true;
-      btn.textContent = "送出中…";
-    }
+        const btn = form.querySelector('button[type="submit"]');
+        const btnText = btn ? btn.textContent : "";
+        if (btn) {
+          btn.disabled = true;
+          btn.textContent = "送出中…";
+        }
 
-    try {
-      const fd = new FormData(form);
+        try {
+          // 1) 報名序號
+          const regInput = document.getElementById("reg_id");
+          if (regInput && !regInput.value) regInput.value = makeRegId();
+          const rid = regInput ? regInput.value : makeRegId();
 
-      // no-cors：不讀回應，但能送出到 GAS（最能避免跨網域被擋）
-      await fetch(GAS_WEBAPP_URL, {
-        method: "POST",
-        body: fd,
-        mode: "no-cors",
+          // 2) UTM/追蹤塞進備註（不影響觀眾自己寫的）
+          const tracking = getTrackingNote();
+          const noteInput = form.querySelector('input[name="備註"]');
+          if (noteInput && tracking) {
+            const cur = (noteInput.value || "").trim();
+            if (!cur.includes("【追蹤】")) {
+              noteInput.value = cur ? `${cur} ${tracking}` : tracking;
+            }
+          }
+
+          // 3) 背景送到 GAS
+          const fd = new FormData(form);
+          await fetch(GAS_WEBAPP_URL, {
+            method: "POST",
+            body: fd,
+            mode: "no-cors",
+          });
+
+          // 4) 跳感謝頁顯示序號
+          location.href = `${THANKS_URL}?rid=${encodeURIComponent(rid)}`;
+
+        } catch (err) {
+          alert("送出失敗，請稍後再試一次。");
+          if (btn) {
+            btn.disabled = false;
+            btn.textContent = btnText || "送出報名";
+          }
+          form.dataset.submitting = "0";
+        }
       });
-
-      // ✅ 永遠回到你的感謝頁（不經過 script.google.com）
-      location.href = location.origin + THANKS_URL;
-
-    } catch (err) {
-      alert("送出失敗，請稍後再試一次。");
-      if (btn) {
-        btn.disabled = false;
-        btn.textContent = "送出報名";
-      }
     }
-  });
-})();
+
+    loadEvent()
+      .then(() => bindAjaxSubmitOnce())
+      .catch(console.error);
   </script>
 </body>
 </html>
-
-
-
-
-
-
