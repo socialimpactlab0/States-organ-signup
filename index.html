@@ -12,7 +12,7 @@
   <script>
     const GAS_WEBAPP_URL = "https://script.google.com/macros/s/AKfycbzUsQFcWW-KCBKvdVQ9rLuWUBwn6vP09KdpN9ltvxJBtlGa1GmdGpxo9lbLqnofTUbG/exec";
     const THANKS_URL = "/thanks";
-    const PIXEL_ID = "1059276802371134"; // 先留空，之後再貼你的 Pixel ID
+    const PIXEL_ID = "1059276802371134"; // 你已經有了就放著
   </script>
 
   <!-- Meta Pixel（PageView）— PIXEL_ID 有填才會啟用 -->
@@ -53,12 +53,6 @@
             <div class="flex gap-3"><div class="w-16 text-slate-500">時間</div><div class="font-medium" id="time"></div></div>
             <div class="flex gap-3"><div class="w-16 text-slate-500">地點</div><div class="font-medium" id="place"></div></div>
             <div class="flex gap-3" id="addrRow"><div class="w-16 text-slate-500">地址</div><div class="font-medium" id="addr"></div></div>
-            <div class="pt-2" id="mapRow">
-              <a id="mapLink" href="#" target="_blank"
-                 class="inline-flex items-center justify-center rounded-xl bg-slate-900 px-4 py-2 text-sm font-medium text-white hover:bg-slate-800">
-                開啟地圖
-              </a>
-            </div>
           </div>
 
           <ul id="notes" class="mt-5 list-disc space-y-2 pl-5 text-slate-700"></ul>
@@ -69,7 +63,7 @@
 
     <div class="mt-8 rounded-2xl bg-white p-6 shadow-sm ring-1 ring-slate-200">
       <h2 class="text-lg font-semibold">報名表單</h2>
-     
+
       <form id="signupForm" class="mt-6 grid gap-4" method="post" action="">
         <input type="hidden" name="活動代碼" id="event_id" />
         <input type="hidden" name="活動名稱" id="event_name" />
@@ -132,6 +126,25 @@
   </div>
 
   <script>
+    // ✅ 來源自動帶入：網址 ?src=fb / ig / threads / line / friend
+    function applySourceFromQuery() {
+      const params = new URLSearchParams(location.search);
+      const src = (params.get('src') || '').toLowerCase();
+
+      const srcMap = {
+        fb: 'Facebook',
+        ig: 'Instagram',
+        threads: 'Threads',
+        line: 'LINE',
+        friend: '朋友轉傳'
+      };
+
+      const sourceSelect = document.querySelector('select[name="訊息來源"]');
+      if (sourceSelect && srcMap[src]) {
+        sourceSelect.value = srcMap[src];
+      }
+    }
+
     async function loadEvent() {
       const res = await fetch('/event.json', { cache: 'no-store' });
       const e = await res.json();
@@ -145,10 +158,6 @@
       const addr = e["地址"] || '';
       if (!addr) document.getElementById('addrRow').classList.add('hidden');
       document.getElementById('addr').textContent = addr;
-
-      const map = e["地圖連結"] || '';
-      if (!map) document.getElementById('mapRow').classList.add('hidden');
-      document.getElementById('mapLink').href = map || '#';
 
       const notes = document.getElementById('notes');
       notes.innerHTML = '';
@@ -168,30 +177,12 @@
 
       const form = document.getElementById('signupForm');
       form.action = GAS_WEBAPP_URL;
-      // ✅ 自動帶入來源：網址 ?src=fb / ig / threads / line / friend
-const params = new URLSearchParams(location.search);
-const src = (params.get('src') || '').toLowerCase();
 
-// 你的下拉選單是「Facebook / Threads / Instagram / LINE / 朋友轉傳 / ...」
-const map = {
-  fb: 'Facebook',
-  ig: 'Instagram',
-  threads: 'Threads',
-  line: 'LINE',
-  friend: '朋友轉傳'
-};
-
-const sourceSelect = document.querySelector('select[name="訊息來源"]');
-if (sourceSelect && map[src]) {
-  sourceSelect.value = map[src];
-}
+      // 放在最後，確保下拉選單已經存在
+      applySourceFromQuery();
     }
 
     loadEvent().catch(console.error);
   </script>
 </body>
 </html>
-
-
-
-
