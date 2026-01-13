@@ -162,9 +162,48 @@
       }
 
     loadEvent().catch(console.error);
+    // ✅ 用 fetch 背景送出，避免手機跳到 script.google.com 被擋
+(function bindAjaxSubmitOnce(){
+  const form = document.getElementById('signupForm');
+  if (!form) return;
+  if (form.dataset.bound === "1") return; // 避免重複綁定
+  form.dataset.bound = "1";
+
+  form.addEventListener('submit', async (ev) => {
+    ev.preventDefault();
+
+    const btn = form.querySelector('button[type="submit"]');
+    if (btn) {
+      btn.disabled = true;
+      btn.textContent = "送出中…";
+    }
+
+    try {
+      const fd = new FormData(form);
+
+      // no-cors：不讀回應，但能送出到 GAS（最能避免跨網域被擋）
+      await fetch(GAS_WEBAPP_URL, {
+        method: "POST",
+        body: fd,
+        mode: "no-cors",
+      });
+
+      // ✅ 永遠回到你的感謝頁（不經過 script.google.com）
+      location.href = THANKS_URL;
+
+    } catch (err) {
+      alert("送出失敗，請稍後再試一次。");
+      if (btn) {
+        btn.disabled = false;
+        btn.textContent = "送出報名";
+      }
+    }
+  });
+})();
   </script>
 </body>
 </html>
+
 
 
 
