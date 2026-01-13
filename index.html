@@ -188,7 +188,7 @@
       });
 
       // ✅ 永遠回到你的感謝頁（不經過 script.google.com）
-      location.href = THANKS_URL;
+      location.href = location.origin + THANKS_URL;
 
     } catch (err) {
       alert("送出失敗，請稍後再試一次。");
@@ -202,6 +202,7 @@
   </script>
 </body>
 </html>
+
 
 
 
