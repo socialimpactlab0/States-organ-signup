@@ -6,6 +6,7 @@
   <title>報名成功</title>
   <script src="https://cdn.tailwindcss.com"></script>
 
+  <!-- Meta Pixel：PageView + CompleteRegistration -->
   <script>
     const PIXEL_ID = "1059276802371134";
     (function(){
@@ -31,15 +32,41 @@
       <div class="mx-auto mb-4 grid h-12 w-12 place-items-center rounded-full bg-emerald-50 ring-1 ring-emerald-200">
         <span class="text-emerald-700 text-xl">✓</span>
       </div>
+
       <h1 class="text-2xl font-semibold">報名成功</h1>
       <p class="mt-3 text-slate-600">請留意活動前 3–5 天來電確認。</p>
-      <a href="/" class="mt-6 inline-flex w-full items-center justify-center rounded-xl bg-slate-900 px-4 py-3 text-sm font-semibold text-white hover:bg-slate-800">
-  回到報名頁
-</a>
+
+      <div class="mt-6 flex flex-col gap-3 sm:flex-row sm:justify-center">
+        <!-- ✅ 繼續報名：回到你的網站首頁（不要導去 script.google.com） -->
+        <a href="/"
+           class="inline-flex items-center justify-center rounded-xl bg-slate-900 px-5 py-3 text-sm font-semibold text-white hover:bg-slate-800">
+          繼續報名
+        </a>
+
+        <!-- ✅ 結束本頁：嘗試關閉；關不掉就跳空白頁 -->
+        <button type="button"
+          onclick="closeOrBlank()"
+          class="inline-flex items-center justify-center rounded-xl bg-white px-5 py-3 text-sm font-semibold text-slate-900 ring-1 ring-slate-300 hover:bg-slate-50">
+          結束本頁
+        </button>
+      </div>
+
+      <p class="mt-4 text-xs text-slate-500">
+        ※ 有些手機瀏覽器不允許直接關閉分頁，若按了沒反應，可直接關掉此分頁即可。
+      </p>
     </div>
   </div>
+
+  <script>
+    function closeOrBlank() {
+      // 先嘗試關閉分頁（只有部分情境允許）
+      window.close();
+
+      // 多數手機不允許 close()，所以再保底：跳到空白頁
+      setTimeout(() => {
+        window.location.replace('about:blank');
+      }, 250);
+    }
+  </script>
 </body>
 </html>
-
-
-
