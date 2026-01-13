@@ -168,12 +168,30 @@
 
       const form = document.getElementById('signupForm');
       form.action = GAS_WEBAPP_URL;
+      // ✅ 自動帶入來源：網址 ?src=fb / ig / threads / line / friend
+const params = new URLSearchParams(location.search);
+const src = (params.get('src') || '').toLowerCase();
+
+// 你的下拉選單是「Facebook / Threads / Instagram / LINE / 朋友轉傳 / ...」
+const map = {
+  fb: 'Facebook',
+  ig: 'Instagram',
+  threads: 'Threads',
+  line: 'LINE',
+  friend: '朋友轉傳'
+};
+
+const sourceSelect = document.querySelector('select[name="訊息來源"]');
+if (sourceSelect && map[src]) {
+  sourceSelect.value = map[src];
+}
     }
 
     loadEvent().catch(console.error);
   </script>
 </body>
 </html>
+
 
 
 
