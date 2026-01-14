@@ -47,6 +47,12 @@
         </div>
       </div>
 
+      <!-- 來源識別 -->
+      <div id="srcBox" class="mt-3 hidden rounded-xl bg-slate-50 p-4 text-left ring-1 ring-slate-200">
+        <div class="text-xs text-slate-500">來源</div>
+        <div id="srcText" class="mt-1 font-semibold text-slate-900"></div>
+      </div>
+
       <div class="mt-6 flex flex-col gap-3 sm:flex-row sm:justify-center">
         <a href="/"
            class="inline-flex items-center justify-center rounded-xl bg-slate-900 px-5 py-3 text-sm font-semibold text-white hover:bg-slate-800">
@@ -69,10 +75,17 @@
   <script>
     const params = new URLSearchParams(location.search);
     const rid = params.get('rid') || '';
+    const src = params.get('src') || '';
 
     if (rid) {
       document.getElementById('ridBox').classList.remove('hidden');
       document.getElementById('ridText').textContent = rid;
+    }
+
+    if (src) {
+      const map = { A: 'A（人員推廣）', B: 'B（線上廣告）' };
+      document.getElementById('srcBox').classList.remove('hidden');
+      document.getElementById('srcText').textContent = map[src] || src;
     }
 
     function copyRid(){
