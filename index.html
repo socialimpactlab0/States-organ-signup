@@ -33,30 +33,17 @@
 
 <body class="bg-slate-50 text-slate-900">
   <!-- 置頂導覽：立即報名 / 外部連結 -->
-<div class="sticky top-0 z-50 border-b border-slate-200 bg-white/90 backdrop-blur">
-  <div class="mx-auto flex max-w-4xl items-center gap-3 px-4 py-3">
-    <div class="min-w-0 flex-1 text-sm font-semibold text-slate-900 truncate" id="topTitle">活動報名</div>
-
-    <div class="flex items-center gap-2 shrink-0">
-      <a id="topExternalLink"
-         href="https://www.ganjingworld.com/zh-TW/playlist/1hof3om2pbb2yaNF1gXobqC1or0p"
-         target="_blank" rel="noopener"
-         class="inline-flex items-center justify-center rounded-xl border border-slate-300 px-3 py-2 text-xs sm:text-sm font-semibold text-slate-700 hover:bg-slate-50 whitespace-nowrap">
-        <span class="sm:hidden">乾淨世界</span>
-        <span class="hidden sm:inline">乾淨世界頻道</span>
-      </a>
-
-      <a href="#signup"
-         class="inline-flex items-center justify-center rounded-xl bg-slate-900 text-white px-3 py-2 text-xs sm:text-sm font-semibold whitespace-nowrap">
-        立即報名
-      </a>
-    </div>
-  </div>
-</div>
-
+  <div class="sticky top-0 z-50 border-b border-slate-200 bg-white/90 backdrop-blur">
+    <div class="mx-auto flex max-w-4xl items-center gap-3 px-4 py-3">
+      <div class="min-w-0 flex-1 text-sm font-semibold text-slate-900 truncate" id="topTitle">活動報名</div>
+      <div class="flex items-center gap-2 shrink-0">
+        <a id="topExternalLink" href="https://www.ganjingworld.com/zh-TW/playlist/1hof3om2pbb2yaNF1gXobqC1or0p" target="_blank" rel="noopener"
+           class="inline-flex items-center justify-center rounded-xl border border-slate-300 px-3 py-2 text-xs sm:text-sm font-semibold text-slate-700 hover:bg-slate-50 whitespace-nowrap">
+          <span class="sm:hidden">乾淨世界</span>
+          <span class="hidden sm:inline">乾淨世界頻道</span>
         </a>
         <a href="#signup"
-           class="inline-flex rounded-xl bg-slate-900 px-3 py-2 text-sm font-semibold text-white hover:bg-slate-800">
+           class="inline-flex items-center justify-center rounded-xl bg-slate-900 px-3 py-2 text-xs sm:text-sm font-semibold text-white hover:bg-slate-800 whitespace-nowrap">
           立即報名
         </a>
       </div>
@@ -67,15 +54,22 @@
     <!-- 訊息公布欄（由 Google Sheet / GAS 動態提供） -->
     <div id="noticeBoard" class="mb-6 hidden"></div>
 
-    <!-- 影片（可選：event.json 若提供 影片嵌入網址/影片URL 才顯示） -->
+    <!-- 影片（可選）：event.json 若提供 影片連結/預告連結/影片URL 才顯示 -->
     <div id="videoCard" class="mb-6 hidden rounded-2xl bg-white p-6 shadow-sm ring-1 ring-slate-200">
       <h2 class="text-lg font-semibold">影片</h2>
-      <div class="mt-4 aspect-video overflow-hidden rounded-xl ring-1 ring-slate-200">
-        <iframe id="videoFrame" class="h-full w-full" src="" title="影片"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-          referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+      <p class="mt-2 text-sm text-slate-600">不想一開始就看到影片也沒關係，想先看預告再決定時再點開即可。</p>
+      <div class="mt-4 flex flex-wrap gap-2">
+        <a id="videoLinkBtn" href="#" target="_blank" rel="noopener"
+           class="inline-flex items-center justify-center rounded-xl border border-slate-300 px-3 py-2 text-xs sm:text-sm font-semibold text-slate-700 hover:bg-slate-50 whitespace-nowrap">
+          觀看預告
+        </a>
+        <a href="https://www.ganjingworld.com/zh-TW/playlist/1hof3om2pbb2yaNF1gXobqC1or0p" target="_blank" rel="noopener"
+           class="inline-flex items-center justify-center rounded-xl border border-slate-300 px-3 py-2 text-xs sm:text-sm font-semibold text-slate-700 hover:bg-slate-50 whitespace-nowrap">
+          更多影片（乾淨世界）
+        </a>
       </div>
     </div>
+</div>
 
     <div class="mt-4 grid gap-6 md:grid-cols-5">
       <div class="md:col-span-2">
@@ -280,18 +274,18 @@
       const topTitle = document.getElementById('topTitle');
       if (topTitle && e["活動名稱"]) topTitle.textContent = e["活動名稱"];
 
-      // 影片（可選）：event.json 提供 影片嵌入網址 或 影片URL 才顯示
-      const videoUrl = e["影片嵌入網址"] || e["影片URL"] || e["video"] || "";
+      // 影片（可選）：event.json 提供「影片連結 / 預告連結 / 影片URL」才顯示（外部開啟，不內嵌）
+      const videoUrl = e["影片連結"] || e["預告連結"] || e["影片URL"] || e["video"] || "";
       if (videoUrl) {
         const card = document.getElementById("videoCard");
-        const frame = document.getElementById("videoFrame");
-        if (card && frame) {
-          frame.src = videoUrl;
+        const btn = document.getElementById("videoLinkBtn");
+        if (card && btn) {
+          btn.href = videoUrl;
           card.classList.remove("hidden");
         }
       }
 
-      // 報名截止（前端 A 方案）：event.json 提供 closeAt 或 截止時間
+// 報名截止（前端 A 方案）：event.json 提供 closeAt 或 截止時間
       const closeAtStr = e["closeAt"] || e["截止時間"] || "";
       if (closeAtStr) {
         const closeAt = new Date(closeAtStr).getTime();
@@ -387,4 +381,3 @@
   </script>
 </body>
 </html>
-
