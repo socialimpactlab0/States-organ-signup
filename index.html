@@ -32,7 +32,36 @@
 </head>
 
 <body class="bg-slate-50 text-slate-900">
-  <div class="mx-auto max-w-4xl px-4 py-8">
+  <!-- 置頂導覽：立即報名 / 外部連結 -->
+  <div class="sticky top-0 z-50 border-b border-slate-200 bg-white/90 backdrop-blur">
+    <div class="mx-auto flex max-w-4xl items-center justify-between px-4 py-3">
+      <div class="text-sm font-semibold text-slate-900" id="topTitle">活動報名</div>
+      <div class="flex items-center gap-2">
+        <a id="topExternalLink" href="https://www.ganjingworld.com/zh-TW/playlist/1hof3om2pbb2yaNF1gXobqC1or0p" target="_blank" rel="noopener"
+           class="hidden sm:inline-flex rounded-xl border border-slate-300 px-3 py-2 text-sm font-semibold text-slate-700 hover:bg-slate-50">
+          乾淨世界頻道
+        </a>
+        <a href="#signup"
+           class="inline-flex rounded-xl bg-slate-900 px-3 py-2 text-sm font-semibold text-white hover:bg-slate-800">
+          立即報名
+        </a>
+      </div>
+    </div>
+  </div>
+    <div class="mx-auto max-w-4xl px-4 py-8">
+
+    <!-- 訊息公布欄（由 Google Sheet / GAS 動態提供） -->
+    <div id="noticeBoard" class="mb-6 hidden"></div>
+
+    <!-- 影片（可選：event.json 若提供 影片嵌入網址/影片URL 才顯示） -->
+    <div id="videoCard" class="mb-6 hidden rounded-2xl bg-white p-6 shadow-sm ring-1 ring-slate-200">
+      <h2 class="text-lg font-semibold">影片</h2>
+      <div class="mt-4 aspect-video overflow-hidden rounded-xl ring-1 ring-slate-200">
+        <iframe id="videoFrame" class="h-full w-full" src="" title="影片"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+      </div>
+    </div>
 
     <div class="mt-4 grid gap-6 md:grid-cols-5">
       <div class="md:col-span-2">
@@ -59,8 +88,11 @@
       </div>
     </div>
 
-    <div class="mt-8 rounded-2xl bg-white p-6 shadow-sm ring-1 ring-slate-200">
+    <div id="signup" class="mt-8 rounded-2xl bg-white p-6 shadow-sm ring-1 ring-slate-200">
       <h2 class="text-lg font-semibold">報名表單</h2>
+      <div id="closedMsg" class="mt-4 hidden rounded-xl border border-amber-200 bg-amber-50 p-4 text-sm text-amber-900">
+        本場次報名已截止或名額已滿，感謝您的關注。
+      </div>
 
       <form id="signupForm" class="mt-6 grid gap-4" method="post" action="">
         <input type="hidden" name="活動代碼" id="event_id" />
@@ -116,7 +148,7 @@
           <span class="text-sm text-slate-700" id="agreeText">我同意名額有限之規則。</span>
         </label>
 
-        <button type="submit"
+        <button id="submitBtn" type="submit"
           class="mt-2 inline-flex w-full items-center justify-center rounded-xl bg-slate-900 px-4 py-3 text-sm font-semibold text-white hover:bg-slate-800">
           送出報名
         </button>
@@ -132,9 +164,11 @@
     }
 
     // 把 UTM / fbclid / referrer 收集成一段字，塞進備註（不需要分網址）
+    
+    // 把 UTM / fbclid / ref 收集成一段字，塞進備註
     function getTrackingNote() {
       const p = new URLSearchParams(location.search);
-      const keys = ["utm_source","utm_medium","utm_campaign","utm_content","utm_term","fbclid"];
+      const keys = ["utm_source","utm_medium","utm_campaign","utm_content","utm_term","fbclid","ref"];
       const parts = [];
 
       keys.forEach(k => {
@@ -142,11 +176,60 @@
         if (v) parts.push(`${k}=${v}`);
       });
 
-      const ref = document.referrer || "";
-      if (ref) parts.push(`ref=${ref}`);
+      // 若網址沒帶 ref 參數，才用瀏覽器 referrer 當作補充
+      if (!p.get("ref")) {
+        const r = document.referrer || "";
+        if (r) parts.push(`ref=${r}`);
+      }
 
       if (parts.length === 0) return "";
       return `【追蹤】${parts.join(";")}`;
+    }
+
+    // 來源識別：用網址參數 src=A 或 src=B
+    function getSourceTag() {
+      const p = new URLSearchParams(location.search);
+      const src = (p.get("src") || "").trim();
+      if (!src) return "";
+      return `【來源】${src}`;
+    }
+
+    function buildNoteTail() {
+      return [getSourceTag(), getTrackingNote()].filter(Boolean).join(" ");
+    }
+
+    // 訊息公布欄（JSONP，避免 CORS 麻煩）
+    function renderNotice(data) {
+      const box = document.getElementById("noticeBoard");
+      if (!box) return;
+
+      if (!data || data.enabled !== true) {
+        box.classList.add("hidden");
+        box.innerHTML = "";
+        return;
+      }
+
+      const title = data.title || "最新公告";
+      const msg = (data.message || "").toString().replace(/\n/g, "<br>");
+      const linkUrl = (data.linkUrl || "").toString().trim();
+      const linkText = (data.linkText || "更多資訊").toString().trim();
+
+      box.classList.remove("hidden");
+      box.innerHTML = `
+        <div class="rounded-2xl bg-white p-6 shadow-sm ring-1 ring-slate-200">
+          <div class="text-lg font-semibold">${title}</div>
+          <div class="mt-2 text-slate-700 leading-relaxed">${msg}</div>
+          ${linkUrl ? `<div class="mt-4"><a href="${linkUrl}" target="_blank" rel="noopener" class="inline-flex rounded-xl bg-slate-900 px-4 py-2 text-sm font-semibold text-white hover:bg-slate-800">${linkText}</a></div>` : ""}
+        </div>
+      `;
+    }
+
+    function loadNotice() {
+      const cb = "renderNotice";
+      const s = document.createElement("script");
+      s.src = `${GAS_WEBAPP_URL}?mode=notice&callback=${cb}&ts=${Date.now()}`;
+      s.async = true;
+      document.body.appendChild(s);
     }
 
     async function loadEvent() {
@@ -178,6 +261,40 @@
       document.getElementById('event_name').value = e["活動名稱"] || '';
       document.getElementById('thanks_url').value = location.origin + THANKS_URL;
       document.getElementById('agreeText').textContent = e["規則同意文"] || '我同意名額有限之規則。';
+
+      // 置頂標題同步活動名稱
+      const topTitle = document.getElementById('topTitle');
+      if (topTitle && e["活動名稱"]) topTitle.textContent = e["活動名稱"];
+
+      // 影片（可選）：event.json 提供 影片嵌入網址 或 影片URL 才顯示
+      const videoUrl = e["影片嵌入網址"] || e["影片URL"] || e["video"] || "";
+      if (videoUrl) {
+        const card = document.getElementById("videoCard");
+        const frame = document.getElementById("videoFrame");
+        if (card && frame) {
+          frame.src = videoUrl;
+          card.classList.remove("hidden");
+        }
+      }
+
+      // 報名截止（前端 A 方案）：event.json 提供 closeAt 或 截止時間
+      const closeAtStr = e["closeAt"] || e["截止時間"] || "";
+      if (closeAtStr) {
+        const closeAt = new Date(closeAtStr).getTime();
+        if (!Number.isNaN(closeAt) && Date.now() >= closeAt) {
+          const btn = document.getElementById("submitBtn");
+          if (btn) btn.disabled = true;
+          const msg = document.getElementById("closedMsg");
+          if (msg) msg.classList.remove("hidden");
+          // 也順便把表單輸入整體 disable，避免誤填
+          const form = document.getElementById("signupForm");
+          if (form) {
+            form.querySelectorAll("input, select, textarea, button").forEach(el => {
+              if (el.id !== "submitBtn") el.disabled = true;
+            });
+          }
+        }
+      }
     }
 
     // ✅ 背景送出，避免手機跳到 script.google.com 被擋；並防重複 + 帶序號 + UTM
@@ -207,13 +324,24 @@
           if (regInput && !regInput.value) regInput.value = makeRegId();
           const rid = regInput ? regInput.value : makeRegId();
 
-          // 2) UTM/追蹤塞進備註（不影響觀眾自己寫的）
-          const tracking = getTrackingNote();
+          // 2) 來源 + 追蹤塞進備註（不影響觀眾自己寫的）
+          const tail = buildNoteTail();
           const noteInput = form.querySelector('input[name="備註"]');
-          if (noteInput && tracking) {
+          if (noteInput && tail) {
             const cur = (noteInput.value || "").trim();
-            if (!cur.includes("【追蹤】")) {
-              noteInput.value = cur ? `${cur} ${tracking}` : tracking;
+            // 避免重覆插入
+            const hasSource = cur.includes("【來源】");
+            const hasTrack = cur.includes("【追蹤】");
+            const needSource = tail.includes("【來源】") && !hasSource;
+            const needTrack = tail.includes("【追蹤】") && !hasTrack;
+
+            const addParts = [];
+            if (needSource) addParts.push(getSourceTag());
+            if (needTrack) addParts.push(getTrackingNote());
+
+            if (addParts.length) {
+              const addText = addParts.join(" ");
+              noteInput.value = cur ? `${cur} ${addText}` : addText;
             }
           }
 
@@ -240,7 +368,7 @@
     }
 
     loadEvent()
-      .then(() => bindAjaxSubmitOnce())
+      .then(() => { loadNotice(); bindAjaxSubmitOnce(); })
       .catch(console.error);
   </script>
 </body>
