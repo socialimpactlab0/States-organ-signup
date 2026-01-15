@@ -213,13 +213,17 @@
       return `【追蹤】${parts.join(";")}`;
     }
 
-    // 來源識別：用網址參數 src=A 或 src=B
-    function getSourceTag() {
-      const p = new URLSearchParams(location.search);
-      const src = (p.get("src") || "").trim();
-      if (!src) return "";
-      return `【來源】${src}`;
-    }
+    // 來源識別：src=A => FB、src=B => SM，其它有填就 => Other
+function getSourceTag() {
+  const p = new URLSearchParams(location.search);
+  const src = (p.get("src") || "").trim().toUpperCase();
+  if (!src) return "";
+
+  if (src === "A") return "【來源】FB";
+  if (src === "B") return "【來源】SM";
+  return "【來源】Other";
+}
+
 
     function buildNoteTail() {
       return [getSourceTag(), getTrackingNote()].filter(Boolean).join(" ");
@@ -443,4 +447,5 @@ async function loadEvent() {
   </script>
 </body>
 </html>
+
 
