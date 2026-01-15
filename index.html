@@ -39,8 +39,8 @@
       <div class="flex items-center gap-2 shrink-0">
         <a id="topExternalLink" href="https://www.ganjingworld.com/zh-TW/playlist/1hof3om2pbb2yaNF1gXobqC1or0p" target="_blank" rel="noopener"
            class="inline-flex items-center justify-center rounded-xl border border-slate-300 px-3 py-2 text-xs sm:text-sm font-semibold text-slate-700 hover:bg-slate-50 whitespace-nowrap">
-          <span class="sm:hidden">精彩反饋</span>
-          <span class="hidden sm:inline">精彩反饋頻道</span>
+          <span class="sm:hidden">乾淨世界</span>
+          <span class="hidden sm:inline">乾淨世界頻道</span>
         </a>
         <a href="#signup"
            class="inline-flex items-center justify-center rounded-xl bg-slate-900 px-3 py-2 text-xs sm:text-sm font-semibold text-white hover:bg-slate-800 whitespace-nowrap">
@@ -92,6 +92,25 @@
 
           <ul id="notes" class="mt-5 list-disc space-y-2 pl-5 text-slate-700"></ul>
           <div class="mt-4 text-sm text-slate-600" id="contact"></div>
+
+          <!-- 可展開：看更多介紹 / 常見問題（有內容才顯示） -->
+          <div class="mt-6 space-y-3">
+            <details id="moreDetails" class="group hidden rounded-xl bg-slate-50 p-4 ring-1 ring-slate-200">
+              <summary class="cursor-pointer list-none select-none font-semibold text-slate-900 flex items-center justify-between">
+                <span>看更多介紹</span>
+                <span class="text-slate-500 group-open:rotate-180 transition">▾</span>
+              </summary>
+              <div class="mt-3 text-sm leading-relaxed text-slate-700" id="moreIntro"></div>
+            </details>
+
+            <details id="faqDetails" class="group hidden rounded-xl bg-slate-50 p-4 ring-1 ring-slate-200">
+              <summary class="cursor-pointer list-none select-none font-semibold text-slate-900 flex items-center justify-between">
+                <span>常見問題</span>
+                <span class="text-slate-500 group-open:rotate-180 transition">▾</span>
+              </summary>
+              <div class="mt-3 space-y-3 text-sm text-slate-700" id="faqList"></div>
+            </details>
+          </div>
         </div>
       </div>
     </div>
@@ -240,7 +259,17 @@
       document.body.appendChild(s);
     }
 
-    async function loadEvent() {
+    
+    function escapeHtml(str) {
+      return String(str)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#39;");
+    }
+
+async function loadEvent() {
       const res = await fetch('/event.json', { cache: 'no-store' });
       const e = await res.json();
 
@@ -264,6 +293,39 @@
 
       const phone = e["聯絡電話"] || '';
       document.getElementById('contact').textContent = phone ? `聯絡電話：${phone}` : '';
+
+      // 可展開區：看更多介紹
+      const more = e["更多介紹"] || e["看更多介紹"] || e["簡介補充"] || "";
+      const moreDetails = document.getElementById("moreDetails");
+      const moreIntro = document.getElementById("moreIntro");
+      if (moreDetails && moreIntro && more) {
+        moreIntro.innerHTML = escapeHtml(more).replace(/\n/g, "<br>");
+        moreDetails.classList.remove("hidden");
+      }
+
+      // 可展開區：常見問題（支援：字串陣列 或 {Q, A}/{q, a} 物件陣列）
+      const faq = e["常見問題"] || e["FAQ"] || [];
+      const faqDetails = document.getElementById("faqDetails");
+      const faqList = document.getElementById("faqList");
+      if (faqDetails && faqList && Array.isArray(faq) && faq.length) {
+        faqList.innerHTML = "";
+        faq.forEach(item => {
+          const wrap = document.createElement("div");
+          wrap.className = "rounded-lg bg-white p-3 ring-1 ring-slate-200";
+          if (typeof item === "string") {
+            wrap.innerHTML = `<div class="font-semibold">Q</div><div class="mt-1">${escapeHtml(item).replace(/\n/g,"<br>")}</div>`;
+          } else if (item && typeof item === "object") {
+            const q = item.Q || item.q || item.question || "";
+            const a = item.A || item.a || item.answer || "";
+            wrap.innerHTML = `
+              <div class="font-semibold">Q：${escapeHtml(q)}</div>
+              <div class="mt-2 text-slate-700">A：${escapeHtml(a).replace(/\n/g,"<br>")}</div>
+            `;
+          }
+          faqList.appendChild(wrap);
+        });
+        faqDetails.classList.remove("hidden");
+      }
 
       document.getElementById('event_id').value = e["活動代碼"] || '';
       document.getElementById('event_name').value = e["活動名稱"] || '';
@@ -381,4 +443,3 @@
   </script>
 </body>
 </html>
-
