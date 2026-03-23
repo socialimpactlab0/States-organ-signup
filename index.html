@@ -2,9 +2,11 @@
 <html lang="zh-Hant">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scalfetch('./event.json'e=1" />
-  <title>活動報名</title>
-
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>國有器官｜台南放映</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600;700;900&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
   <script src="https://cdn.tailwindcss.com"></script>
 
   <script>
@@ -13,7 +15,7 @@
     const PIXEL_ID = "1059276802371134";
   </script>
 
-  <!-- Meta Pixel（PageView） -->
+  <!-- Meta Pixel -->
   <script>
     (function loadPixel(){
       if(!PIXEL_ID) return;
@@ -29,228 +31,498 @@
       fbq('track', 'PageView');
     })();
   </script>
+
+  <style>
+    :root {
+      --serif: 'Noto Serif TC', serif;
+      --sans: 'Noto Sans TC', sans-serif;
+    }
+    body { font-family: var(--sans); }
+    .font-serif { font-family: var(--serif); }
+
+    /* Hero 漸層背景 */
+    .hero-bg {
+      background: linear-gradient(160deg, #0a0a0a 0%, #1a1a2e 40%, #16213e 70%, #0f3460 100%);
+    }
+
+    /* 獎項卡片光暈 */
+    .award-card {
+      background: linear-gradient(135deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.02) 100%);
+      border: 1px solid rgba(255,255,255,0.1);
+      backdrop-filter: blur(10px);
+      transition: all 0.3s ease;
+    }
+    .award-card:hover {
+      border-color: rgba(255,215,0,0.3);
+      box-shadow: 0 0 20px rgba(255,215,0,0.1);
+      transform: translateY(-2px);
+    }
+
+    /* 淡入動畫 */
+    .fade-up {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .fade-up.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* 金色強調 */
+    .text-gold { color: #d4af37; }
+    .border-gold { border-color: #d4af37; }
+    .bg-gold { background-color: #d4af37; }
+
+    /* 見證卡片 */
+    .testimonial-card {
+      position: relative;
+      border-left: 3px solid #d4af37;
+    }
+    .testimonial-card::before {
+      content: '\275D';
+      position: absolute;
+      top: -8px;
+      left: 12px;
+      font-size: 2.5rem;
+      color: #d4af37;
+      opacity: 0.3;
+      font-family: Georgia, serif;
+      line-height: 1;
+    }
+
+    /* 脈動動畫（名額） */
+    @keyframes pulse-gold {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(212,175,55,0.4); }
+      50% { box-shadow: 0 0 0 8px rgba(212,175,55,0); }
+    }
+    .pulse-gold { animation: pulse-gold 2s ease infinite; }
+
+    /* 分隔線裝飾 */
+    .divider {
+      display: flex; align-items: center; gap: 16px;
+      color: #6b7280; font-size: 0.75rem; letter-spacing: 0.1em;
+    }
+    .divider::before, .divider::after {
+      content: ''; flex: 1; height: 1px; background: #e5e7eb;
+    }
+
+    /* 滾動條美化 */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: #f1f1f1; }
+    ::-webkit-scrollbar-thumb { background: #d4af37; border-radius: 3px; }
+  </style>
 </head>
 
-<body class="bg-slate-50 text-slate-900">
-  <!-- 置頂導覽：立即報名 / 外部連結 -->
-  <div class="sticky top-0 z-50 border-b border-slate-200 bg-white/90 backdrop-blur">
-    <div class="mx-auto flex max-w-4xl items-center gap-3 px-4 py-3">
-      <div class="min-w-0 flex-1 text-sm font-semibold text-slate-900 truncate" id="topTitle">活動報名</div>
+<body class="bg-stone-50 text-slate-900">
+
+  <!-- ===== 置頂導覽 ===== -->
+  <nav class="sticky top-0 z-50 border-b border-slate-200 bg-white/95 backdrop-blur">
+    <div class="mx-auto flex max-w-5xl items-center gap-3 px-4 py-3">
+      <div class="min-w-0 flex-1 font-serif text-sm font-semibold text-slate-900 truncate" id="topTitle">
+        國有器官｜台南放映
+      </div>
       <div class="flex items-center gap-2 shrink-0">
-        <a id="topExternalLink" href="https://www.ganjingworld.com/zh-TW/playlist/1hof3om2pbb2yaNF1gXobqC1or0p" target="_blank" rel="noopener"
-           class="inline-flex items-center justify-center rounded-xl border border-slate-300 px-3 py-2 text-xs sm:text-sm font-semibold text-slate-700 hover:bg-slate-50 whitespace-nowrap">
-          <span class="sm:hidden">精采反饋</span>
-          <span class="hidden sm:inline">精采反饋頻道</span>
+        <a id="topExternalLink"
+           href="https://www.ganjingworld.com/zh-TW/playlist/1hof3om2pbb2yaNF1gXobqC1or0p"
+           target="_blank" rel="noopener"
+           class="hidden sm:inline-flex items-center justify-center rounded-lg border border-slate-300 px-3 py-2 text-xs font-semibold text-slate-700 hover:bg-slate-50 whitespace-nowrap">
+          觀眾迴響
         </a>
         <a href="#signup"
-           class="inline-flex items-center justify-center rounded-xl bg-slate-900 px-3 py-2 text-xs sm:text-sm font-semibold text-white hover:bg-slate-800 whitespace-nowrap">
-          立即報名
+           class="inline-flex items-center justify-center rounded-lg bg-slate-900 px-4 py-2 text-xs sm:text-sm font-semibold text-white hover:bg-slate-800 whitespace-nowrap transition">
+          免費預約座位
         </a>
       </div>
     </div>
-  </div>
-    <div class="mx-auto max-w-4xl px-4 py-8">
+  </nav>
 
-    <!-- 訊息公布欄（由 Google Sheet / GAS 動態提供） -->
-    <div id="noticeBoard" class="mb-6 hidden"></div>
+  <!-- ===== Hero ===== -->
+  <section class="hero-bg text-white">
+    <div class="mx-auto max-w-5xl px-4 py-16 md:py-24">
+      <div class="grid gap-10 md:grid-cols-2 md:items-center">
 
-    <!-- 影片（可選）：event.json 若提供 影片連結/預告連結/影片URL 才顯示 -->
-    <div id="videoCard" class="mb-6 hidden rounded-2xl bg-white p-6 shadow-sm ring-1 ring-slate-200">
-      <h2 class="text-lg font-semibold">影片</h2>
-      <p class="mt-2 text-sm text-slate-600">不想一開始就看到影片也沒關係，想先看預告再決定時再點開即可。</p>
+        <!-- 左：文字 -->
+        <div class="fade-up">
+          <!-- 標籤 -->
+          <div class="mb-5 flex flex-wrap gap-2">
+            <span class="rounded-full border border-yellow-500/40 bg-yellow-500/10 px-3 py-1 text-xs font-semibold text-yellow-400">
+              🎬 紀錄片
+            </span>
+            <span class="rounded-full border border-white/20 bg-white/10 px-3 py-1 text-xs font-semibold text-white/80">
+              免費入場｜需預約
+            </span>
+          </div>
+
+          <!-- 主標題 -->
+          <h1 class="font-serif text-5xl md:text-6xl font-black leading-tight tracking-tight text-gold mb-2">
+            國有器官
+          </h1>
+          <p class="font-serif text-xl text-white/70 mb-6 tracking-widest">States of Organ</p>
+
+          <!-- 一句話 -->
+          <p class="text-base md:text-lg text-white/80 leading-relaxed mb-8 max-w-md">
+            七年取材、跨國調查、奧斯卡入圍——<br>
+            <span class="text-white font-semibold">這不是虛構的劇情，這是正在發生的事實。</span>
+          </p>
+
+          <!-- 活動資訊快覽 -->
+          <div class="rounded-2xl border border-white/10 bg-white/5 backdrop-blur p-5 mb-8 space-y-3">
+            <div class="flex items-center gap-3 text-sm">
+              <span class="text-gold text-base">📅</span>
+              <span class="text-white/60 w-12 shrink-0">日期</span>
+              <span class="font-semibold text-white" id="heroDate">載入中…</span>
+            </div>
+            <div class="flex items-center gap-3 text-sm">
+              <span class="text-gold text-base">🕑</span>
+              <span class="text-white/60 w-12 shrink-0">時間</span>
+              <span class="font-semibold text-white" id="heroTime"></span>
+            </div>
+            <div class="flex items-center gap-3 text-sm">
+              <span class="text-gold text-base">📍</span>
+              <span class="text-white/60 w-12 shrink-0">地點</span>
+              <span class="font-semibold text-white" id="heroPlace"></span>
+            </div>
+          </div>
+
+          <!-- CTA 按鈕 -->
+          <div class="flex flex-wrap gap-3">
+            <a href="#signup"
+               class="pulse-gold inline-flex items-center gap-2 rounded-xl bg-gold px-6 py-3 text-sm font-bold text-slate-900 hover:brightness-110 transition">
+              免費預約座位 →
+            </a>
+            <a href="https://www.ganjingworld.com/zh-TW/playlist/1hof3om2pbb2yaNF1gXobqC1or0p"
+               target="_blank" rel="noopener"
+               class="inline-flex items-center gap-2 rounded-xl border border-white/30 px-6 py-3 text-sm font-semibold text-white hover:bg-white/10 transition">
+              觀看影片迴響
+            </a>
+          </div>
+        </div>
+
+        <!-- 右：海報 -->
+        <div class="fade-up" style="animation-delay:0.2s">
+          <div class="relative mx-auto max-w-xs md:max-w-none">
+            <div class="absolute inset-0 rounded-2xl bg-gold/20 blur-2xl scale-95"></div>
+            <img src="./assets/poster.jpg" alt="國有器官電影海報"
+                 class="relative rounded-2xl shadow-2xl w-full object-cover ring-1 ring-white/10">
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== 獎項區塊 ===== -->
+  <section class="bg-slate-900 text-white py-12">
+    <div class="mx-auto max-w-5xl px-4">
+      <div class="divider text-white/30 mb-8" style="color:#6b7280">
+        <span style="color:#9ca3af">國際獎項認可</span>
+      </div>
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 fade-up">
+        <div class="award-card rounded-2xl p-5 text-center">
+          <div class="text-2xl mb-2">🏆</div>
+          <div class="font-serif font-bold text-gold text-sm mb-1">加拿大雄獅獎</div>
+          <div class="text-white/60 text-xs">最佳導演・最佳音樂</div>
+        </div>
+        <div class="award-card rounded-2xl p-5 text-center">
+          <div class="text-2xl mb-2">🎬</div>
+          <div class="font-serif font-bold text-gold text-sm mb-1">曼哈頓電影節</div>
+          <div class="text-white/60 text-xs">最佳人權紀錄片</div>
+        </div>
+        <div class="award-card rounded-2xl p-5 text-center">
+          <div class="text-2xl mb-2">🎯</div>
+          <div class="font-serif font-bold text-gold text-sm mb-1">奧斯卡入圍</div>
+          <div class="text-white/60 text-xs">2025 最佳長紀錄片</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== 主要內容 ===== -->
+  <div class="mx-auto max-w-5xl px-4 py-10 space-y-8">
+
+    <!-- 訊息公布欄 -->
+    <div id="noticeBoard" class="hidden"></div>
+
+    <!-- 影片區塊 -->
+    <div id="videoCard" class="hidden rounded-2xl bg-white p-6 shadow-sm ring-1 ring-slate-200 fade-up">
+      <h2 class="font-serif text-lg font-bold">🎥 預告片</h2>
+      <p class="mt-2 text-sm text-slate-500">想先了解這部片的份量，可以點開預告。</p>
       <div class="mt-4 flex flex-wrap gap-2">
         <a id="videoLinkBtn" href="#" target="_blank" rel="noopener"
-           class="inline-flex items-center justify-center rounded-xl border border-slate-300 px-3 py-2 text-xs sm:text-sm font-semibold text-slate-700 hover:bg-slate-50 whitespace-nowrap">
-          觀看預告
+           class="inline-flex items-center gap-2 rounded-xl bg-slate-900 px-4 py-2 text-sm font-semibold text-white hover:bg-slate-800 transition">
+          ▶ 觀看預告
         </a>
-        <a href="https://www.ganjingworld.com/zh-TW/playlist/1hof3om2pbb2yaNF1gXobqC1or0p" target="_blank" rel="noopener"
-           class="inline-flex items-center justify-center rounded-xl border border-slate-300 px-3 py-2 text-xs sm:text-sm font-semibold text-slate-700 hover:bg-slate-50 whitespace-nowrap">
+        <a href="https://www.ganjingworld.com/zh-TW/playlist/1hof3om2pbb2yaNF1gXobqC1or0p"
+           target="_blank" rel="noopener"
+           class="inline-flex items-center gap-2 rounded-xl border border-slate-300 px-4 py-2 text-sm font-semibold text-slate-700 hover:bg-slate-50 transition">
           更多影片（乾淨世界）
         </a>
       </div>
     </div>
-</div>
 
-    <div class="mt-4 grid gap-6 md:grid-cols-5">
-      <div class="md:col-span-2">
-        <div class="overflow-hidden rounded-2xl shadow-sm ring-1 ring-slate-200 bg-white">
-          <img src="./assets/poster.jpg" alt="活動海報" class="h-full w-full object-cover" />
+    <!-- 電影介紹 + 活動詳情 -->
+    <div class="grid gap-6 md:grid-cols-5 fade-up">
+
+      <!-- 左：電影介紹 -->
+      <div class="md:col-span-2 space-y-4">
+        <div class="rounded-2xl bg-white p-6 shadow-sm ring-1 ring-slate-200 h-full">
+          <h2 class="font-serif text-lg font-bold mb-4">關於這部片</h2>
+          <div class="space-y-3 text-sm text-slate-600 leading-relaxed">
+            <p>這是一部<strong class="text-slate-900">耗時七年</strong>拍攝的紀錄片，兩個年輕人在中共迫害法輪功的政策中神秘失蹤，家人開始漫長的尋找之路。</p>
+            <p>影片透過大量<strong class="text-slate-900">第一手證詞與獨家採訪</strong>，揭露強制摘取器官的真相。</p>
+            <p>在台灣上映後，各地戲院收到恐嚇信件，這些打壓行為反而讓更多人關注此議題。</p>
+          </div>
+
+          <div class="mt-5 pt-5 border-t border-slate-100">
+            <div class="text-xs text-slate-400 mb-3 font-semibold tracking-wide">映後安排</div>
+            <div class="flex items-start gap-2 text-sm text-slate-600">
+              <span class="text-gold mt-0.5">💬</span>
+              <span>映後將有與談交流，歡迎提問討論</span>
+            </div>
+          </div>
+
+          <!-- 可展開：更多介紹 -->
+          <details id="moreDetails" class="group hidden mt-4 rounded-xl bg-slate-50 p-4 ring-1 ring-slate-200">
+            <summary class="cursor-pointer list-none select-none font-semibold text-slate-900 flex items-center justify-between text-sm">
+              <span>看更多介紹</span>
+              <span class="text-slate-500 group-open:rotate-180 transition">▾</span>
+            </summary>
+            <div class="mt-3 text-sm leading-relaxed text-slate-700" id="moreIntro"></div>
+          </details>
         </div>
       </div>
 
-      <div class="md:col-span-3">
+      <!-- 右：活動詳情 -->
+      <div class="md:col-span-3 space-y-4">
         <div class="rounded-2xl bg-white p-6 shadow-sm ring-1 ring-slate-200">
-          <h1 id="title" class="text-2xl font-semibold tracking-tight">載入中…</h1>
-          <p id="tagline" class="mt-2 text-slate-600"></p>
+          <h1 class="font-serif text-2xl font-bold tracking-tight" id="title">載入中…</h1>
+          <p class="mt-1 text-slate-500 text-sm" id="tagline"></p>
 
-          <div class="mt-5 grid gap-3 rounded-xl bg-slate-50 p-4 ring-1 ring-slate-200">
-            <div class="flex gap-3"><div class="w-16 text-slate-500">日期</div><div class="font-medium" id="date"></div></div>
-            <div class="flex gap-3"><div class="w-16 text-slate-500">時間</div><div class="font-medium" id="time"></div></div>
-            <div class="flex gap-3"><div class="w-16 text-slate-500">地點</div><div class="font-medium" id="place"></div></div>
-            <div class="flex gap-3" id="addrRow"><div class="w-16 text-slate-500">地址</div><div class="font-medium" id="addr"></div></div>
+          <!-- 活動資訊 -->
+          <div class="mt-5 rounded-xl bg-stone-50 p-4 ring-1 ring-slate-200 space-y-3">
+            <div class="flex gap-3 text-sm">
+              <div class="w-14 text-slate-400 shrink-0">日期</div>
+              <div class="font-semibold text-slate-900" id="date"></div>
+            </div>
+            <div class="flex gap-3 text-sm">
+              <div class="w-14 text-slate-400 shrink-0">時間</div>
+              <div class="font-semibold text-slate-900" id="time"></div>
+            </div>
+            <div class="flex gap-3 text-sm">
+              <div class="w-14 text-slate-400 shrink-0">地點</div>
+              <div class="font-semibold text-slate-900" id="place"></div>
+            </div>
+            <div class="flex gap-3 text-sm" id="addrRow">
+              <div class="w-14 text-slate-400 shrink-0">地址</div>
+              <div class="font-semibold text-slate-900" id="addr"></div>
+            </div>
           </div>
 
-          <ul id="notes" class="mt-5 list-disc space-y-2 pl-5 text-slate-700"></ul>
-          <div class="mt-4 text-sm text-slate-600" id="contact"></div>
+          <!-- 注意事項 -->
+          <ul id="notes" class="mt-5 space-y-2 text-sm text-slate-700"></ul>
+          <div class="mt-3 text-sm text-slate-500" id="contact"></div>
 
-          <!-- 可展開：看更多介紹 / 常見問題（有內容才顯示） -->
-          <div class="mt-6 space-y-3">
-            <details id="moreDetails" class="group hidden rounded-xl bg-slate-50 p-4 ring-1 ring-slate-200">
-              <summary class="cursor-pointer list-none select-none font-semibold text-slate-900 flex items-center justify-between">
-                <span>看更多介紹</span>
-                <span class="text-slate-500 group-open:rotate-180 transition">▾</span>
-              </summary>
-              <div class="mt-3 text-sm leading-relaxed text-slate-700" id="moreIntro"></div>
-            </details>
-
-            <details id="faqDetails" class="group hidden rounded-xl bg-slate-50 p-4 ring-1 ring-slate-200">
-              <summary class="cursor-pointer list-none select-none font-semibold text-slate-900 flex items-center justify-between">
-                <span>常見問題</span>
-                <span class="text-slate-500 group-open:rotate-180 transition">▾</span>
-              </summary>
-              <div class="mt-3 space-y-3 text-sm text-slate-700" id="faqList"></div>
-            </details>
-          </div>
+          <!-- 常見問題 -->
+          <details id="faqDetails" class="group hidden mt-4 rounded-xl bg-slate-50 p-4 ring-1 ring-slate-200">
+            <summary class="cursor-pointer list-none select-none font-semibold text-slate-900 flex items-center justify-between text-sm">
+              <span>常見問題</span>
+              <span class="text-slate-500 group-open:rotate-180 transition">▾</span>
+            </summary>
+            <div class="mt-3 space-y-3 text-sm text-slate-700" id="faqList"></div>
+          </details>
         </div>
       </div>
     </div>
 
-    <div id="signup" class="mt-8 rounded-2xl bg-white p-6 shadow-sm ring-1 ring-slate-200">
-      <h2 class="text-lg font-semibold">報名表單</h2>
-      <div id="closedMsg" class="mt-4 hidden rounded-xl border border-amber-200 bg-amber-50 p-4 text-sm text-amber-900">
-        本場次報名已截止或名額已滿，感謝您的關注。
+    <!-- ===== 觀眾迴響（預留區）===== -->
+    <div class="fade-up">
+      <div class="divider mb-6"><span>觀眾迴響</span></div>
+      <div class="rounded-2xl bg-white p-6 shadow-sm ring-1 ring-slate-200">
+        <div class="flex items-center gap-3 mb-5">
+          <h2 class="font-serif text-lg font-bold">看過的人這麼說</h2>
+          <a href="https://www.ganjingworld.com/zh-TW/playlist/1hof3om2pbb2yaNF1gXobqC1or0p"
+             target="_blank" rel="noopener"
+             class="ml-auto text-xs text-slate-500 hover:text-slate-700 underline underline-offset-2">
+            查看更多迴響 →
+          </a>
+        </div>
+
+        <!-- 預留：之後替換成真實迴響 -->
+        <div id="testimonialsGrid" class="grid gap-4 sm:grid-cols-2">
+          <!-- 預留卡片樣式（之後填入真實內容） -->
+          <div class="testimonial-card rounded-xl bg-stone-50 p-5 pl-6">
+            <p class="text-sm text-slate-400 italic leading-relaxed">（觀眾迴響即將更新）</p>
+            <div class="mt-3 text-xs text-slate-300">— 觀影者</div>
+          </div>
+          <div class="testimonial-card rounded-xl bg-stone-50 p-5 pl-6">
+            <p class="text-sm text-slate-400 italic leading-relaxed">（觀眾迴響即將更新）</p>
+            <div class="mt-3 text-xs text-slate-300">— 觀影者</div>
+          </div>
+        </div>
+
+        <p class="mt-4 text-center text-xs text-slate-400">
+          更多真實迴響請見
+          <a href="https://www.ganjingworld.com/zh-TW/playlist/1hof3om2pbb2yaNF1gXobqC1or0p"
+             target="_blank" rel="noopener" class="text-gold underline">乾淨世界頻道</a>
+        </p>
       </div>
-
-      <form id="signupForm" class="mt-6 grid gap-4" method="post" action="">
-        <input type="hidden" name="活動代碼" id="event_id" />
-        <input type="hidden" name="活動名稱" id="event_name" />
-        <input type="hidden" name="成功頁網址" id="thanks_url" />
-        <input type="hidden" name="報名序號" id="reg_id" />
-
-        <div class="grid gap-4 md:grid-cols-2">
-          <label class="block">
-            <span class="text-sm font-medium">訂票人姓名（必填）</span>
-            <input name="訂票人姓名" required class="mt-2 w-full rounded-xl border border-slate-300 px-3 py-2" />
-          </label>
-
-          <label class="block">
-            <span class="text-sm font-medium">聯絡電話（必填）</span>
-            <input name="聯絡電話" required inputmode="tel" class="mt-2 w-full rounded-xl border border-slate-300 px-3 py-2" />
-            <div class="mt-1 text-xs text-slate-500">活動前 3–5 天會電話核對，簡訊或通話後才算完成保留。</div>
-          </label>
-        </div>
-
-        <div class="grid gap-4 md:grid-cols-2">
-          <label class="block">
-            <span class="text-sm font-medium">票數（每人最多 2 張）（必填）</span>
-            <select name="票數" required class="mt-2 w-full rounded-xl border border-slate-300 px-3 py-2">
-              <option value="">請選擇</option><option>1</option><option>2</option>
-            </select>
-          </label>
-
-          <label class="block">
-            <span class="text-sm font-medium">LINE 或 Email（擇一，必填）</span>
-            <input name="LINE 或 Email" required class="mt-2 w-full rounded-xl border border-slate-300 px-3 py-2" />
-          </label>
-        </div>
-
-        <div class="grid gap-4 md:grid-cols-2">
-          <label class="block">
-            <span class="text-sm font-medium">訊息來源（必填）</span>
-            <select name="訊息來源" required class="mt-2 w-full rounded-xl border border-slate-300 px-3 py-2">
-              <option value="">請選擇</option>
-              <option>Facebook</option><option>Threads</option><option>Instagram</option>
-              <option>LINE</option><option>朋友轉傳</option><option>海報／傳單</option><option>其他</option>
-            </select>
-          </label>
-
-          <label class="block">
-            <span class="text-sm font-medium">備註</span>
-            <input name="備註" class="mt-2 w-full rounded-xl border border-slate-300 px-3 py-2" />
-          </label>
-        </div>
-
-        <label class="flex items-start gap-3 rounded-xl bg-slate-50 p-4 ring-1 ring-slate-200">
-          <input type="checkbox" required class="mt-1 h-4 w-4" />
-          <span class="text-sm text-slate-700" id="agreeText">我同意名額有限之規則。</span>
-        </label>
-
-        <button id="submitBtn" type="submit"
-          class="mt-2 inline-flex w-full items-center justify-center rounded-xl bg-slate-900 px-4 py-3 text-sm font-semibold text-white hover:bg-slate-800">
-          送出報名
-        </button>
-      </form>
     </div>
+
+    <!-- ===== 報名表單 ===== -->
+    <div id="signup" class="fade-up">
+      <div class="divider mb-6"><span>立即預約</span></div>
+      <div class="rounded-2xl bg-white p-6 shadow-sm ring-1 ring-slate-200">
+        <div class="flex items-start justify-between gap-4 mb-6">
+          <div>
+            <h2 class="font-serif text-xl font-bold">免費預約座位</h2>
+            <p class="text-sm text-slate-500 mt-1">名額額滿即止，請盡早預約</p>
+          </div>
+          <!-- 名額狀態 -->
+          <div class="shrink-0 text-center">
+            <div class="rounded-xl border-2 border-gold bg-yellow-50 px-4 py-2">
+              <div class="text-xs text-slate-500 mb-0.5">名額狀態</div>
+              <div class="text-sm font-bold text-gold" id="quotaStatus">開放中</div>
+            </div>
+          </div>
+        </div>
+
+        <div id="closedMsg" class="mb-4 hidden rounded-xl border border-amber-200 bg-amber-50 p-4 text-sm text-amber-900">
+          本場次報名已截止或名額已滿，感謝您的關注。
+        </div>
+
+        <form id="signupForm" class="grid gap-4" method="post" action="">
+          <input type="hidden" name="活動代碼" id="event_id" />
+          <input type="hidden" name="活動名稱" id="event_name" />
+          <input type="hidden" name="成功頁網址" id="thanks_url" />
+          <input type="hidden" name="報名序號" id="reg_id" />
+
+          <div class="grid gap-4 md:grid-cols-2">
+            <label class="block">
+              <span class="text-sm font-semibold text-slate-700">訂票人姓名 <span class="text-red-500">*</span></span>
+              <input name="訂票人姓名" required
+                class="mt-2 w-full rounded-xl border border-slate-200 bg-stone-50 px-4 py-2.5 text-sm focus:border-yellow-400 focus:outline-none focus:ring-2 focus:ring-yellow-400/20 transition" />
+            </label>
+            <label class="block">
+              <span class="text-sm font-semibold text-slate-700">聯絡電話 <span class="text-red-500">*</span></span>
+              <input name="聯絡電話" required inputmode="tel"
+                class="mt-2 w-full rounded-xl border border-slate-200 bg-stone-50 px-4 py-2.5 text-sm focus:border-yellow-400 focus:outline-none focus:ring-2 focus:ring-yellow-400/20 transition" />
+              <div class="mt-1 text-xs text-slate-400">活動前 3–5 天會電話核對，簡訊或通話後才算完成保留。</div>
+            </label>
+          </div>
+
+          <div class="grid gap-4 md:grid-cols-2">
+            <label class="block">
+              <span class="text-sm font-semibold text-slate-700">票數（每人最多 2 張）<span class="text-red-500">*</span></span>
+              <select name="票數" required
+                class="mt-2 w-full rounded-xl border border-slate-200 bg-stone-50 px-4 py-2.5 text-sm focus:border-yellow-400 focus:outline-none focus:ring-2 focus:ring-yellow-400/20 transition">
+                <option value="">請選擇</option>
+                <option>1</option><option>2</option>
+              </select>
+            </label>
+            <label class="block">
+              <span class="text-sm font-semibold text-slate-700">LINE 或 Email（擇一）<span class="text-red-500">*</span></span>
+              <input name="LINE 或 Email" required
+                class="mt-2 w-full rounded-xl border border-slate-200 bg-stone-50 px-4 py-2.5 text-sm focus:border-yellow-400 focus:outline-none focus:ring-2 focus:ring-yellow-400/20 transition" />
+            </label>
+          </div>
+
+          <div class="grid gap-4 md:grid-cols-2">
+            <label class="block">
+              <span class="text-sm font-semibold text-slate-700">訊息來源 <span class="text-red-500">*</span></span>
+              <select name="訊息來源" required
+                class="mt-2 w-full rounded-xl border border-slate-200 bg-stone-50 px-4 py-2.5 text-sm focus:border-yellow-400 focus:outline-none focus:ring-2 focus:ring-yellow-400/20 transition">
+                <option value="">請選擇</option>
+                <option>Facebook</option><option>Threads</option><option>Instagram</option>
+                <option>LINE</option><option>朋友轉傳</option><option>海報／傳單</option><option>其他</option>
+              </select>
+            </label>
+            <label class="block">
+              <span class="text-sm font-semibold text-slate-700">備註</span>
+              <input name="備註"
+                class="mt-2 w-full rounded-xl border border-slate-200 bg-stone-50 px-4 py-2.5 text-sm focus:border-yellow-400 focus:outline-none focus:ring-2 focus:ring-yellow-400/20 transition" />
+            </label>
+          </div>
+
+          <label class="flex items-start gap-3 rounded-xl bg-stone-50 p-4 ring-1 ring-slate-200 cursor-pointer hover:bg-stone-100 transition">
+            <input type="checkbox" required class="mt-0.5 h-4 w-4 accent-yellow-500 shrink-0" />
+            <span class="text-sm text-slate-600" id="agreeText">我同意名額有限之規則。</span>
+          </label>
+
+          <button id="submitBtn" type="submit"
+            class="mt-1 inline-flex w-full items-center justify-center gap-2 rounded-xl bg-slate-900 px-4 py-3.5 text-sm font-bold text-white hover:bg-slate-800 transition disabled:opacity-50 disabled:cursor-not-allowed">
+            確認預約座位 →
+          </button>
+
+          <p class="text-center text-xs text-slate-400">
+            免費入場・名額有限・額滿即止
+          </p>
+        </form>
+      </div>
+    </div>
+
   </div>
 
+  <!-- ===== Footer ===== -->
+  <footer class="mt-12 border-t border-slate-200 bg-white py-8 text-center">
+    <p class="font-serif text-base font-semibold text-slate-900 mb-1">國有器官｜台南放映</p>
+    <p class="text-xs text-slate-400">免費入場，需事先預約，名額額滿即止</p>
+    <div class="mt-4 flex justify-center gap-4">
+      <a href="https://www.ganjingworld.com/zh-TW/playlist/1hof3om2pbb2yaNF1gXobqC1or0p"
+         target="_blank" rel="noopener"
+         class="text-xs text-slate-500 hover:text-slate-700 underline underline-offset-2">
+        乾淨世界頻道
+      </a>
+      <span class="text-slate-200">|</span>
+      <a href="#signup" class="text-xs text-gold font-semibold hover:underline">立即預約</a>
+    </div>
+  </footer>
+
+  <!-- ===== JavaScript ===== -->
   <script>
-    // 產生報名序號：TNN-XXXXXXXX
+    // 產生報名序號
     function makeRegId() {
       const s = Math.random().toString(16).slice(2, 10).toUpperCase();
       return `TNN-${s}`;
     }
 
-    // 把 UTM / fbclid / referrer 收集成一段字，塞進備註（不需要分網址）
-    
-    // 把 UTM / fbclid / ref 收集成一段字，塞進備註
     function getTrackingNote() {
       const p = new URLSearchParams(location.search);
       const keys = ["utm_source","utm_medium","utm_campaign","utm_content","utm_term","fbclid","ref"];
       const parts = [];
-
-      keys.forEach(k => {
-        const v = p.get(k);
-        if (v) parts.push(`${k}=${v}`);
-      });
-
-      // 若網址沒帶 ref 參數，才用瀏覽器 referrer 當作補充
-      if (!p.get("ref")) {
-        const r = document.referrer || "";
-        if (r) parts.push(`ref=${r}`);
-      }
-
+      keys.forEach(k => { const v = p.get(k); if (v) parts.push(`${k}=${v}`); });
+      if (!p.get("ref")) { const r = document.referrer || ""; if (r) parts.push(`ref=${r}`); }
       if (parts.length === 0) return "";
       return `【追蹤】${parts.join(";")}`;
     }
 
-    // 來源識別：src=A => FB、src=B => SM，其它有填就 => Other
-function getSourceTag() {
-  const p = new URLSearchParams(location.search);
-  const src = (p.get("src") || "").trim().toUpperCase();
-  if (!src) return "";
-
-  if (src === "A") return "【來源】FB";
-  if (src === "B") return "【來源】SM";
-  return "【來源】Other";
-}
-
+    function getSourceTag() {
+      const p = new URLSearchParams(location.search);
+      const src = (p.get("src") || "").trim().toUpperCase();
+      if (!src) return "";
+      if (src === "A") return "【來源】FB";
+      if (src === "B") return "【來源】SM";
+      return "【來源】Other";
+    }
 
     function buildNoteTail() {
       return [getSourceTag(), getTrackingNote()].filter(Boolean).join(" ");
     }
 
-    // 訊息公布欄（JSONP，避免 CORS 麻煩）
     function renderNotice(data) {
       const box = document.getElementById("noticeBoard");
       if (!box) return;
-
-      if (!data || data.enabled !== true) {
-        box.classList.add("hidden");
-        box.innerHTML = "";
-        return;
-      }
-
+      if (!data || data.enabled !== true) { box.classList.add("hidden"); box.innerHTML = ""; return; }
       const title = data.title || "最新公告";
       const msg = (data.message || "").toString().replace(/\n/g, "<br>");
       const linkUrl = (data.linkUrl || "").toString().trim();
       const linkText = (data.linkText || "更多資訊").toString().trim();
-
       box.classList.remove("hidden");
       box.innerHTML = `
-        <div class="rounded-2xl bg-white p-6 shadow-sm ring-1 ring-slate-200">
-          <div class="text-lg font-semibold">${title}</div>
-          <div class="mt-2 text-slate-700 leading-relaxed">${msg}</div>
-          ${linkUrl ? `<div class="mt-4"><a href="${linkUrl}" target="_blank" rel="noopener" class="inline-flex rounded-xl bg-slate-900 px-4 py-2 text-sm font-semibold text-white hover:bg-slate-800">${linkText}</a></div>` : ""}
+        <div class="rounded-2xl border border-amber-200 bg-amber-50 p-5">
+          <div class="font-semibold text-amber-900">📢 ${title}</div>
+          <div class="mt-2 text-sm text-amber-800 leading-relaxed">${msg}</div>
+          ${linkUrl ? `<div class="mt-3"><a href="${linkUrl}" target="_blank" rel="noopener" class="inline-flex rounded-lg bg-amber-600 px-4 py-2 text-xs font-semibold text-white hover:bg-amber-700">${linkText}</a></div>` : ""}
         </div>
       `;
     }
@@ -263,25 +535,28 @@ function getSourceTag() {
       document.body.appendChild(s);
     }
 
-    
     function escapeHtml(str) {
       return String(str)
-        .replace(/&/g, "&amp;")
-        .replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;")
-        .replace(/"/g, "&quot;")
+        .replace(/&/g, "&amp;").replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;").replace(/"/g, "&quot;")
         .replace(/'/g, "&#39;");
     }
 
-async function loadEvent() {
+    async function loadEvent() {
       const res = await fetch('./event.json', { cache: 'no-store' });
       const e = await res.json();
 
+      document.title = e["活動名稱"] || '國有器官｜台南放映';
       document.getElementById('title').textContent = e["活動名稱"] || '';
       document.getElementById('tagline').textContent = e["一句話"] || '';
       document.getElementById('date').textContent = e["日期"] || '';
       document.getElementById('time').textContent = e["時間"] || '';
       document.getElementById('place').textContent = e["地點"] || '';
+
+      // Hero 快覽
+      document.getElementById('heroDate').textContent = (e["日期"] || '') + (e["時間"] ? '　' + e["時間"] : '');
+      document.getElementById('heroTime').textContent = e["時間"] || '';
+      document.getElementById('heroPlace').textContent = e["地點"] || '';
 
       const addr = e["地址"] || '';
       if (!addr) document.getElementById('addrRow').classList.add('hidden');
@@ -291,14 +566,15 @@ async function loadEvent() {
       notes.innerHTML = '';
       (e["注意事項"] || []).forEach(t => {
         const li = document.createElement('li');
-        li.textContent = t;
+        li.className = 'flex items-start gap-2 text-slate-600';
+        li.innerHTML = `<span class="text-gold mt-0.5 shrink-0">▸</span><span>${escapeHtml(t)}</span>`;
         notes.appendChild(li);
       });
 
       const phone = e["聯絡電話"] || '';
-      document.getElementById('contact').textContent = phone ? `聯絡電話：${phone}` : '';
+      document.getElementById('contact').textContent = phone ? `📞 聯絡電話：${phone}` : '';
 
-      // 可展開區：看更多介紹
+      // 更多介紹
       const more = e["更多介紹"] || e["看更多介紹"] || e["簡介補充"] || "";
       const moreDetails = document.getElementById("moreDetails");
       const moreIntro = document.getElementById("moreIntro");
@@ -307,7 +583,7 @@ async function loadEvent() {
         moreDetails.classList.remove("hidden");
       }
 
-      // 可展開區：常見問題（支援：字串陣列 或 {Q, A}/{q, a} 物件陣列）
+      // 常見問題
       const faq = e["常見問題"] || e["FAQ"] || [];
       const faqDetails = document.getElementById("faqDetails");
       const faqList = document.getElementById("faqList");
@@ -315,15 +591,15 @@ async function loadEvent() {
         faqList.innerHTML = "";
         faq.forEach(item => {
           const wrap = document.createElement("div");
-          wrap.className = "rounded-lg bg-white p-3 ring-1 ring-slate-200";
+          wrap.className = "rounded-lg bg-white p-4 ring-1 ring-slate-200";
           if (typeof item === "string") {
-            wrap.innerHTML = `<div class="font-semibold">Q</div><div class="mt-1">${escapeHtml(item).replace(/\n/g,"<br>")}</div>`;
+            wrap.innerHTML = `<div class="font-semibold text-sm">Q</div><div class="mt-1 text-sm text-slate-600">${escapeHtml(item).replace(/\n/g,"<br>")}</div>`;
           } else if (item && typeof item === "object") {
             const q = item.Q || item.q || item.question || "";
             const a = item.A || item.a || item.answer || "";
             wrap.innerHTML = `
-              <div class="font-semibold">Q：${escapeHtml(q)}</div>
-              <div class="mt-2 text-slate-700">A：${escapeHtml(a).replace(/\n/g,"<br>")}</div>
+              <div class="font-semibold text-sm text-slate-900">Q：${escapeHtml(q)}</div>
+              <div class="mt-2 text-sm text-slate-600">A：${escapeHtml(a).replace(/\n/g,"<br>")}</div>
             `;
           }
           faqList.appendChild(wrap);
@@ -336,22 +612,18 @@ async function loadEvent() {
       document.getElementById('thanks_url').value = location.origin + THANKS_URL;
       document.getElementById('agreeText').textContent = e["規則同意文"] || '我同意名額有限之規則。';
 
-      // 置頂標題同步活動名稱
       const topTitle = document.getElementById('topTitle');
       if (topTitle && e["活動名稱"]) topTitle.textContent = e["活動名稱"];
 
-      // 影片（可選）：event.json 提供「影片連結 / 預告連結 / 影片URL」才顯示（外部開啟，不內嵌）
+      // 影片
       const videoUrl = e["影片連結"] || e["預告連結"] || e["影片URL"] || e["video"] || "";
       if (videoUrl) {
         const card = document.getElementById("videoCard");
         const btn = document.getElementById("videoLinkBtn");
-        if (card && btn) {
-          btn.href = videoUrl;
-          card.classList.remove("hidden");
-        }
+        if (card && btn) { btn.href = videoUrl; card.classList.remove("hidden"); }
       }
 
-// 報名截止（前端 A 方案）：event.json 提供 closeAt 或 截止時間
+      // 截止檢查
       const closeAtStr = e["closeAt"] || e["截止時間"] || "";
       if (closeAtStr) {
         const closeAt = new Date(closeAtStr).getTime();
@@ -360,7 +632,8 @@ async function loadEvent() {
           if (btn) btn.disabled = true;
           const msg = document.getElementById("closedMsg");
           if (msg) msg.classList.remove("hidden");
-          // 也順便把表單輸入整體 disable，避免誤填
+          const quotaStatus = document.getElementById("quotaStatus");
+          if (quotaStatus) { quotaStatus.textContent = "已截止"; quotaStatus.className = "text-sm font-bold text-red-500"; }
           const form = document.getElementById("signupForm");
           if (form) {
             form.querySelectorAll("input, select, textarea, button").forEach(el => {
@@ -371,7 +644,6 @@ async function loadEvent() {
       }
     }
 
-    // ✅ 背景送出，避免手機跳到 script.google.com 被擋；並防重複 + 帶序號 + UTM
     function bindAjaxSubmitOnce() {
       const form = document.getElementById('signupForm');
       if (!form) return;
@@ -380,72 +652,68 @@ async function loadEvent() {
 
       form.addEventListener('submit', async (ev) => {
         ev.preventDefault();
-
-        // 防連點/重複送出
         if (form.dataset.submitting === "1") return;
         form.dataset.submitting = "1";
 
         const btn = form.querySelector('button[type="submit"]');
         const btnText = btn ? btn.textContent : "";
-        if (btn) {
-          btn.disabled = true;
-          btn.textContent = "送出中…";
-        }
+        if (btn) { btn.disabled = true; btn.textContent = "送出中…"; }
 
         try {
-          // 1) 報名序號
           const regInput = document.getElementById("reg_id");
           if (regInput && !regInput.value) regInput.value = makeRegId();
           const rid = regInput ? regInput.value : makeRegId();
 
-          // 2) 來源 + 追蹤塞進備註（不影響觀眾自己寫的）
           const tail = buildNoteTail();
           const noteInput = form.querySelector('input[name="備註"]');
           if (noteInput && tail) {
             const cur = (noteInput.value || "").trim();
-            // 避免重覆插入
             const hasSource = cur.includes("【來源】");
             const hasTrack = cur.includes("【追蹤】");
             const needSource = tail.includes("【來源】") && !hasSource;
             const needTrack = tail.includes("【追蹤】") && !hasTrack;
-
             const addParts = [];
             if (needSource) addParts.push(getSourceTag());
             if (needTrack) addParts.push(getTrackingNote());
-
             if (addParts.length) {
               const addText = addParts.join(" ");
               noteInput.value = cur ? `${cur} ${addText}` : addText;
             }
           }
 
-          // 3) 背景送到 GAS
           const fd = new FormData(form);
-          await fetch(GAS_WEBAPP_URL, {
-            method: "POST",
-            body: fd,
-            mode: "no-cors",
-          });
-
-          // 4) 跳感謝頁顯示序號
+          await fetch(GAS_WEBAPP_URL, { method: "POST", body: fd, mode: "no-cors" });
           location.href = `${THANKS_URL}?rid=${encodeURIComponent(rid)}`;
 
         } catch (err) {
           alert("送出失敗，請稍後再試一次。");
-          if (btn) {
-            btn.disabled = false;
-            btn.textContent = btnText || "送出報名";
-          }
+          if (btn) { btn.disabled = false; btn.textContent = btnText || "確認預約座位"; }
           form.dataset.submitting = "0";
         }
       });
     }
 
+    // 滾動淡入
+    function initFadeUp() {
+      const els = document.querySelectorAll('.fade-up');
+      if ('IntersectionObserver' in window) {
+        const obs = new IntersectionObserver((entries) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('visible');
+              obs.unobserve(entry.target);
+            }
+          });
+        }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+        els.forEach(el => obs.observe(el));
+      } else {
+        els.forEach(el => el.classList.add('visible'));
+      }
+    }
+
     loadEvent()
-      .then(() => { loadNotice(); bindAjaxSubmitOnce(); })
+      .then(() => { loadNotice(); bindAjaxSubmitOnce(); initFadeUp(); })
       .catch(console.error);
   </script>
 </body>
 </html>
-
-
