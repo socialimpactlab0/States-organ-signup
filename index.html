@@ -42,7 +42,7 @@
 
     /* Hero 漸層背景 */
     .hero-bg {
-      background: linear-gradient(160deg, #0a0a0a 0%, #1a1a2e 40%, #16213e 70%, #0f3460 100%);
+      background: linear-gradient(160deg, #000000 0%, #121212 40%, #1c1917 70%, #292524 100%);
     }
 
     /* 獎項卡片光暈 */
@@ -93,8 +93,8 @@
 
     /* 脈動動畫（名額） */
     @keyframes pulse-gold {
-      0%, 100% { box-shadow: 0 0 0 0 rgba(212,175,55,0.4); }
-      50% { box-shadow: 0 0 0 8px rgba(212,175,55,0); }
+      0%, 100% { box-shadow: 0 0 0 0 rgba(250,204,21,0.45); }
+      50% { box-shadow: 0 0 0 8px rgba(180,83,9,0); }
     }
     .pulse-gold { animation: pulse-gold 2s ease infinite; }
 
@@ -185,7 +185,7 @@
           <!-- 一句話 -->
           <p class="text-base md:text-lg text-white/80 leading-relaxed mb-8 max-w-md">
             耗時七年、跨國秘密拍攝、入圍奧斯卡——<br>
-            <span class="text-white font-semibold">這是一部在台灣上映時，<span class="text-gold">遭恐嚇信試圖噤聲</span>的電影。</span><br>
+            <span class="text-white font-semibold">這是一部在台灣上映時，<span class="font-bold px-1.5 py-0.5 rounded" style="color:#fca5a5;background:rgba(185,28,28,0.18);border:1px solid rgba(185,28,28,0.35)">遭恐嚇信試圖噤聲</span>的電影。</span><br>
             <span class="text-white/60 text-sm">有人不想讓你看到它。</span>
           </p>
 
@@ -231,7 +231,7 @@
           <!-- CTA 按鈕 -->
           <div class="flex flex-wrap gap-3 relative z-10">
             <a href="#signup"
-               class="pulse-gold inline-flex items-center gap-2 rounded-xl bg-gold px-6 py-3 text-sm font-bold text-slate-900 hover:brightness-110 transition shadow-[0_0_20px_rgba(212,175,55,0.4)]">
+               class="pulse-gold inline-flex items-center gap-2 rounded-xl px-6 py-3 text-sm font-bold text-slate-900 hover:brightness-110 transition shadow-[0_0_24px_rgba(212,175,55,0.45)]" style="background:linear-gradient(135deg,#FACC15 0%,#B45309 100%)">
               預約限量席次 →
             </a>
             <a href="https://www.ganjingworld.com/zh-TW/playlist/1hof3om2pbb2yaNF1gXobqC1or0p"
@@ -260,7 +260,7 @@
   </section>
 
   <!-- ===== 獎項區塊 ===== -->
-  <section class="bg-slate-900 text-white py-12 relative z-10 -mt-2">
+  <section class="text-white py-12 relative z-10 -mt-2" style="background:#0e0e0e">
     <div class="mx-auto max-w-5xl px-4">
       <div class="divider text-white/30 mb-8" style="color:#6b7280">
         <span style="color:#9ca3af">國際獎項認可</span>
@@ -356,7 +356,7 @@
           <div class="space-y-3 text-sm text-slate-600 leading-relaxed">
             <p>故事，從兩起<strong class="text-slate-900">神秘的失蹤案</strong>開始。</p>
             <p>兩個年輕人在國家政策下憑空消失，他們的家人踏上了一場漫長且危險的尋找之路。這部耗時七年、跨國秘密拍攝的紀錄片，透過大量<strong class="text-slate-900">第一手獨家採訪與真實供述</strong>，宛如驚悚片般一層層揭開隱藏在國家機器背後，最令人不寒而慄的醫療黑幕。</p>
-            <p>在台灣上映後，各地戲院陸續收到<strong class="text-slate-900">恐嚇信試圖阻止播出</strong>。打壓，反而讓更多人決定去看它。</p>
+            <p>在台灣上映後，各地戲院陸續收到<strong class="font-bold px-1 rounded" style="color:#b91c1c;background:rgba(185,28,28,0.08)">恐嚇信試圖阻止播出</strong>。打壓，反而讓更多人決定去看它。</p>
           </div>
 
           <div class="mt-5 pt-5 border-t border-slate-100">
@@ -576,7 +576,7 @@
 
           <!-- 高轉換率按鈕設計 -->
           <button id="submitBtn" type="submit"
-            class="group relative mt-2 inline-flex w-full items-center justify-center gap-2 overflow-hidden rounded-xl px-4 py-4 text-base font-bold text-slate-900 shadow-[0_8px_20px_rgba(200,151,58,0.35)] transition-all hover:-translate-y-1 hover:shadow-[0_12px_25px_rgba(200,151,58,0.55)] disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:translate-y-0" style="background:linear-gradient(to right,#c8973a,#d4af37)">
+            class="group relative mt-2 inline-flex w-full items-center justify-center gap-2 overflow-hidden rounded-xl px-4 py-4 text-base font-bold text-slate-900 shadow-[0_8px_20px_rgba(180,83,9,0.35)] transition-all hover:-translate-y-1 hover:shadow-[0_12px_25px_rgba(180,83,9,0.5)] disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:translate-y-0" style="background:linear-gradient(135deg,#FACC15 0%,#B45309 100%)">
             <!-- 按鈕光澤特效 -->
             <div class="absolute inset-0 flex h-full w-full justify-center [transform:skew(-12deg)_translateX(-150%)] group-hover:duration-1000 group-hover:[transform:skew(-12deg)_translateX(150%)]">
               <div class="relative h-full w-8 bg-white/30"></div>
