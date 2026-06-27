@@ -217,7 +217,7 @@
             <label class="block"><span class="text-sm font-semibold text-slate-700">LINE 或 Email（擇一） <span class="text-red-500">*</span></span><input name="LINE 或 Email" required class="mt-2 w-full rounded-xl border border-stone-200 bg-stone-50 px-4 py-3 text-sm transition focus:border-[#c8973a] focus:outline-none focus:ring-2 focus:ring-[#c8973a]/20" /></label>
           </div>
           <div class="grid gap-4 md:grid-cols-2">
-            <label class="block"><span class="text-sm font-semibold text-slate-700">訊息來源 <span class="text-red-500">*</span></span><select name="訊息來源" required class="mt-2 w-full rounded-xl border border-stone-200 bg-stone-50 px-4 py-3 text-sm transition focus:border-[#c8973a] focus:outline-none focus:ring-2 focus:ring-[#c8973a]/20"><option value="">請選擇</option><option>Facebook</option><option>Threads</option><option>Instagram</option><option>LINE</option><option>朋友轉傳</option><option>海報／傳單</option><option>其他</option></select></label>
+            <label class="block"><span class="text-sm font-semibold text-slate-700">訊息來源 <span class="text-red-500">*</span></span><select name="訊息來源" required class="mt-2 w-full rounded-xl border border-stone-200 bg-stone-50 px-4 py-3 text-sm transition focus:border-[#c8973a] focus:outline-none focus:ring-2 focus:ring-[#c8973a]/20"><option value="">請選擇</option><option>Facebook</option><option>Threads</option><option>Instagram</option><option>LINE</option><option>簡訊</option><option>朋友轉傳</option><option>海報／傳單</option><option>其他</option></select></label>
             <label class="block"><span class="text-sm font-semibold text-slate-700">備註</span><input name="備註" class="mt-2 w-full rounded-xl border border-stone-200 bg-stone-50 px-4 py-3 text-sm transition focus:border-[#c8973a] focus:outline-none focus:ring-2 focus:ring-[#c8973a]/20" /></label>
           </div>
           <label class="flex cursor-pointer items-start gap-3 rounded-xl bg-stone-50 p-4 ring-1 ring-stone-200 transition hover:bg-stone-100"><input type="checkbox" required class="mt-0.5 h-4 w-4 shrink-0 accent-[#c8973a]" /><span class="text-sm text-slate-600">我同意名額有限，若活動前 3–5 天未接到確認簡訊或電話，名額可能由候補遞補。</span></label>
@@ -266,7 +266,7 @@
       const src = (p.get("src") || "").trim().toUpperCase();
       if (!src) return "";
       if (src === "A") return "【來源】FB";
-      if (src === "B") return "【來源】SM";
+      if (src === "B") return "【來源】簡訊";
       return "【來源】Other";
     }
 
