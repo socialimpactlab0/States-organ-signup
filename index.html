@@ -14,18 +14,31 @@
   </script>
   <style>
     :root{--serif:'Noto Serif TC',serif;--sans:'Noto Sans TC',sans-serif;--gold:#d4af37;--gold2:#b9873b}
-    html{scroll-behavior:smooth}body{font-family:var(--sans);background:#fafaf9;color:#0f172a}.font-serif{font-family:var(--serif)}.text-gold{color:var(--gold)}
-    .hero-bg{background:radial-gradient(circle at 75% 15%,rgba(212,175,55,.25),transparent 28%),linear-gradient(155deg,#020617 0%,#111111 42%,#1c1917 75%,#292524 100%)}
-    .fade-up{opacity:0;transform:translateY(22px);transition:opacity .7s ease,transform .7s ease}.fade-up.visible{opacity:1;transform:translateY(0)}
+    html{scroll-behavior:smooth}
+    body{font-family:var(--sans);background:#fafaf9;color:#0f172a}
+    .font-serif{font-family:var(--serif)}
+    .text-gold{color:var(--gold)}
+    .hero-cinematic{position:relative;background-image:linear-gradient(90deg,rgba(2,6,23,.92) 0%,rgba(2,6,23,.82) 34%,rgba(15,23,42,.58) 62%,rgba(2,6,23,.9) 100%),radial-gradient(circle at 78% 20%,rgba(212,175,55,.26),transparent 26%),url('./assets/poster.jpg');background-size:cover;background-position:center 18%;background-repeat:no-repeat}
+    .hero-cinematic:after{content:"";position:absolute;inset:auto 0 0 0;height:120px;background:linear-gradient(180deg,rgba(15,23,42,0),rgba(15,23,42,.55) 55%,rgba(15,23,42,.82) 100%)}
+    .fade-up{opacity:0;transform:translateY(22px);transition:opacity .7s ease,transform .7s ease}
+    .fade-up.visible{opacity:1;transform:translateY(0)}
     .glass{background:linear-gradient(135deg,rgba(255,255,255,.08),rgba(255,255,255,.03));border:1px solid rgba(255,255,255,.12);backdrop-filter:blur(10px)}
-    .soft-card{background:#fff;border:1px solid #e5e7eb;box-shadow:0 10px 28px rgba(15,23,42,.06)}.gold-btn{background:linear-gradient(135deg,#facc15 0%,#b45309 100%);color:#1a1208}
+    .soft-card{background:#fff;border:1px solid #e5e7eb;box-shadow:0 10px 28px rgba(15,23,42,.06)}
+    .gold-btn{background:linear-gradient(135deg,#facc15 0%,#b45309 100%);color:#1a1208}
     .light-message-box{background:radial-gradient(circle at top right,rgba(250,204,21,.16),transparent 34%),linear-gradient(180deg,#fffaf0,#fff7e6);border:1px solid rgba(190,145,70,.35);box-shadow:0 16px 38px rgba(80,50,20,.10)}
-    .divider{display:flex;align-items:center;gap:14px;color:#78716c;font-size:.75rem;letter-spacing:.12em}.divider:before,.divider:after{content:"";flex:1;height:1px;background:#e7e5e4}
-    .testimonial-card{position:relative;border-left:3px solid var(--gold)}.testimonial-card:before{content:'\275D';position:absolute;top:-8px;left:12px;font-size:2.3rem;color:var(--gold);opacity:.28;font-family:Georgia,serif;line-height:1}
-    .feedback-wrap{background:radial-gradient(circle at 80% 10%,rgba(212,175,55,.22),transparent 30%),linear-gradient(145deg,#0f172a,#1c1917 65%,#292524)}.feedback-wrap video{width:100%;background:#000;object-fit:contain}
-    @keyframes pulse-gold{0%,100%{box-shadow:0 0 0 0 rgba(250,204,21,.42)}50%{box-shadow:0 0 0 9px rgba(250,204,21,0)}}.pulse-gold{animation:pulse-gold 2.2s ease infinite}
-    @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}.floating-poster{animation:float 6s ease-in-out infinite}
-    ::-webkit-scrollbar{width:6px}::-webkit-scrollbar-track{background:#f1f1f1}::-webkit-scrollbar-thumb{background:#d4af37;border-radius:3px}
+    .divider{display:flex;align-items:center;gap:14px;color:#78716c;font-size:.75rem;letter-spacing:.12em}
+    .divider:before,.divider:after{content:"";flex:1;height:1px;background:#e7e5e4}
+    .testimonial-card{position:relative;border-left:3px solid var(--gold)}
+    .testimonial-card:before{content:'\275D';position:absolute;top:-8px;left:12px;font-size:2.3rem;color:var(--gold);opacity:.28;font-family:Georgia,serif;line-height:1}
+    .feedback-wrap{background:radial-gradient(circle at 80% 10%,rgba(212,175,55,.22),transparent 30%),linear-gradient(145deg,#0f172a,#1c1917 65%,#292524)}
+    .feedback-wrap video{width:100%;background:#000;object-fit:contain}
+    .hero-metric{background:linear-gradient(135deg,rgba(255,255,255,.13),rgba(255,255,255,.05));border:1px solid rgba(255,255,255,.16);backdrop-filter:blur(8px)}
+    .hero-kicker{display:inline-flex;align-items:center;gap:.5rem;border:1px solid rgba(212,175,55,.35);background:rgba(212,175,55,.10);color:#f6d98a}
+    @keyframes pulse-gold{0%,100%{box-shadow:0 0 0 0 rgba(250,204,21,.42)}50%{box-shadow:0 0 0 9px rgba(250,204,21,0)}}
+    .pulse-gold{animation:pulse-gold 2.2s ease infinite}
+    ::-webkit-scrollbar{width:6px}
+    ::-webkit-scrollbar-track{background:#f1f1f1}
+    ::-webkit-scrollbar-thumb{background:#d4af37;border-radius:3px}
   </style>
 </head>
 <body>
@@ -39,38 +52,40 @@
     </div>
   </nav>
 
-  <section class="hero-bg overflow-hidden text-white">
-    <div class="mx-auto max-w-5xl px-4 py-14 md:py-24">
-      <div class="grid gap-10 md:grid-cols-2 md:items-center">
-        <div class="fade-up relative z-10">
-          <div class="mb-5 flex flex-wrap gap-2">
-            <span class="rounded-full px-3 py-1 text-xs font-semibold" style="border:1px solid rgba(212,175,55,.4);background:rgba(212,175,55,.12);color:#d4af37">紀錄片</span>
-            <span class="rounded-full border border-white/20 bg-white/10 px-3 py-1 text-xs font-semibold text-white/80">免費入場｜需預約</span>
-          </div>
-          <h1 class="mb-2 font-serif text-5xl font-black leading-tight tracking-tight md:text-6xl" style="color:#f5f0e8">國有器官</h1>
-          <p class="mb-6 font-serif text-xl tracking-widest text-white/70">台南勞工育樂中心・7/12（日）14:00</p>
-          <p class="mb-8 max-w-md text-base leading-relaxed text-white/80 md:text-lg">
-            耗時七年拍攝・<span class="font-semibold text-gold">40+ 項國際榮譽</span>・全台已超過 <span class="font-semibold text-gold">900 場</span>——<br>
-            <span class="font-semibold text-white">這是一部很多人看完，說必須讓更多人知道的電影。</span><br>
-            <span class="mt-1 inline-block text-xs text-white/50">上映後曾受外部施壓試圖阻止播出，仍持續熱映中。</span>
-          </p>
-          <div class="glass relative mb-8 overflow-hidden rounded-2xl p-5 shadow-2xl">
-            <div class="absolute -right-10 -top-10 h-32 w-32 rounded-full bg-yellow-400/10 blur-3xl"></div>
-            <div class="relative space-y-4 text-sm">
-              <div class="flex items-center gap-4"><div class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-white/10 text-gold">日</div><div><div class="mb-0.5 text-xs tracking-widest text-white/50">DATE</div><div class="font-semibold tracking-wide text-white">7/12（日）</div></div></div>
-              <div class="flex items-center gap-4"><div class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-white/10 text-gold">時</div><div><div class="mb-0.5 text-xs tracking-widest text-white/50">TIME</div><div class="font-semibold tracking-wide text-white">14:00 放映｜13:30 進場</div></div></div>
-              <div class="flex items-center gap-4"><div class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-white/10 text-gold">地</div><div><div class="mb-0.5 text-xs tracking-widest text-white/50">LOCATION</div><div class="font-semibold tracking-wide text-white">勞工育樂中心</div></div></div>
-            </div>
-          </div>
-          <div class="relative z-10 flex flex-wrap gap-3">
-            <a href="#signup" class="gold-btn pulse-gold inline-flex items-center gap-2 rounded-xl px-6 py-3 text-sm font-bold shadow-[0_0_24px_rgba(212,175,55,.45)] hover:brightness-110">預約限量席次 →</a>
-            <a href="#feedback" class="inline-flex items-center gap-2 rounded-xl border border-white/30 px-6 py-3 text-sm font-semibold text-white hover:bg-white/10">觀看影片迴響</a>
-          </div>
+  <section class="hero-cinematic overflow-hidden text-white">
+    <div class="relative z-10 mx-auto max-w-5xl px-4 py-16 md:py-28 lg:py-32">
+      <div class="fade-up max-w-3xl">
+        <div class="mb-5 flex flex-wrap gap-2">
+          <span class="hero-kicker rounded-full px-3 py-1 text-xs font-semibold">紀錄片</span>
+          <span class="rounded-full border border-white/20 bg-white/10 px-3 py-1 text-xs font-semibold text-white/80">免費入場｜需預約</span>
         </div>
-        <div class="fade-up relative z-0" style="animation-delay:.2s">
-          <div class="relative mx-auto max-w-xs md:max-w-[400px]">
-            <div class="absolute inset-0 scale-90 rounded-2xl bg-yellow-400/25 blur-[42px]"></div>
-            <img src="./assets/poster.jpg" alt="國有器官電影海報" class="floating-poster relative w-full rounded-xl object-cover shadow-[0_20px_50px_rgba(0,0,0,.5)] ring-1 ring-white/20">
+        <h1 class="mb-3 font-serif text-5xl font-black leading-tight tracking-tight text-[#f7f1e8] md:text-7xl">國有器官</h1>
+        <p class="mb-6 font-serif text-lg tracking-[.22em] text-white/70 md:text-2xl">台南免費放映・7/12（日）14:00</p>
+        <p class="mb-8 max-w-2xl text-base leading-8 text-white/82 md:text-lg">
+          耗時七年拍攝・<span class="font-semibold text-[#f5d17a]">40+ 項國際榮譽</span>・全台已超過 <span class="font-semibold text-[#f5d17a]">900 場</span>。<br>
+          這不只是一場放映，而是一部很多人看完後，認為必須讓更多人知道的電影。
+        </p>
+
+        <div class="mb-8 flex flex-wrap gap-3">
+          <a href="#signup" class="gold-btn pulse-gold inline-flex items-center gap-2 rounded-xl px-6 py-3 text-sm font-bold shadow-[0_0_24px_rgba(212,175,55,.45)] hover:brightness-110">立即預約席次 →</a>
+          <a href="#feedback" class="inline-flex items-center gap-2 rounded-xl border border-white/30 px-6 py-3 text-sm font-semibold text-white hover:bg-white/10">先看觀眾迴響</a>
+        </div>
+
+        <div class="grid gap-4 md:grid-cols-3">
+          <div class="hero-metric rounded-2xl p-5">
+            <div class="mb-1 text-xs tracking-[.18em] text-white/45">DATE</div>
+            <div class="font-serif text-xl font-bold text-white">7/12（日）</div>
+            <div class="mt-2 text-sm text-white/70">台南勞工育樂中心</div>
+          </div>
+          <div class="hero-metric rounded-2xl p-5">
+            <div class="mb-1 text-xs tracking-[.18em] text-white/45">TIME</div>
+            <div class="font-serif text-xl font-bold text-white">14:00 放映</div>
+            <div class="mt-2 text-sm text-white/70">13:30 開始進場</div>
+          </div>
+          <div class="hero-metric rounded-2xl p-5">
+            <div class="mb-1 text-xs tracking-[.18em] text-white/45">HIGHLIGHT</div>
+            <div class="font-serif text-xl font-bold text-white">真實觀眾回饋</div>
+            <div class="mt-2 text-sm text-white/70">頁面下方可直接觀看 3 支影片</div>
           </div>
         </div>
       </div>
