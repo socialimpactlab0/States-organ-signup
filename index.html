@@ -8,53 +8,32 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600;700;900&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
   <script src="https://cdn.tailwindcss.com"></script>
-
   <script>
     const GAS_WEBAPP_URL = "https://script.google.com/macros/s/AKfycbzUsQFcWW-KCBKvdVQ9rLuWUBwn6vP09KdpN9ltvxJBtlGa1GmdGpxo9lbLqnofTUbG/exec";
     const THANKS_URL = "./thanks.html";
   </script>
-
   <style>
-    :root {
-      --serif: 'Noto Serif TC', serif;
-      --sans: 'Noto Sans TC', sans-serif;
-      --gold: #d4af37;
-      --gold2: #b9873b;
-    }
-    html { scroll-behavior: smooth; }
-    body { font-family: var(--sans); background:#fafaf9; color:#0f172a; }
-    .font-serif { font-family: var(--serif); }
-    .text-gold { color: var(--gold); }
-    .hero-bg { background: radial-gradient(circle at 75% 15%, rgba(212,175,55,.25), transparent 28%), linear-gradient(155deg,#020617 0%,#111111 42%,#1c1917 75%,#292524 100%); }
-    .fade-up { opacity:0; transform: translateY(22px); transition: opacity .7s ease, transform .7s ease; }
-    .fade-up.visible { opacity:1; transform: translateY(0); }
-    .glass { background: linear-gradient(135deg,rgba(255,255,255,.08),rgba(255,255,255,.03)); border:1px solid rgba(255,255,255,.12); backdrop-filter: blur(10px); }
-    .soft-card { background:#fff; border:1px solid #e5e7eb; box-shadow:0 10px 28px rgba(15,23,42,.06); }
-    .gold-btn { background:linear-gradient(135deg,#facc15 0%,#b45309 100%); color:#1a1208; }
-    .gold-border { border-color: rgba(212,175,55,.35); }
-    .light-message-box { background: radial-gradient(circle at top right, rgba(250,204,21,.16), transparent 34%), linear-gradient(180deg,#fffaf0,#fff7e6); border:1px solid rgba(190,145,70,.35); box-shadow:0 16px 38px rgba(80,50,20,.10); }
-    .divider { display:flex; align-items:center; gap:14px; color:#78716c; font-size:.75rem; letter-spacing:.12em; }
-    .divider::before,.divider::after { content:""; flex:1; height:1px; background:#e7e5e4; }
-    .testimonial-card { position:relative; border-left:3px solid var(--gold); }
-    .testimonial-card::before { content:'\275D'; position:absolute; top:-8px; left:12px; font-size:2.3rem; color:var(--gold); opacity:.28; font-family:Georgia,serif; line-height:1; }
-    .feedback-video { background: radial-gradient(circle at 80% 10%, rgba(212,175,55,.22), transparent 30%), linear-gradient(145deg,#0f172a,#1c1917 65%,#292524); }
-    .feedback-video video { width:100%; max-height:520px; background:#000; object-fit:contain; }
-    @keyframes pulse-gold { 0%,100%{box-shadow:0 0 0 0 rgba(250,204,21,.42)} 50%{box-shadow:0 0 0 9px rgba(250,204,21,0)} }
-    .pulse-gold { animation:pulse-gold 2.2s ease infinite; }
-    @keyframes float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-12px)} }
-    .floating-poster { animation:float 6s ease-in-out infinite; }
-    ::-webkit-scrollbar { width:6px; }
-    ::-webkit-scrollbar-track { background:#f1f1f1; }
-    ::-webkit-scrollbar-thumb { background:#d4af37; border-radius:3px; }
+    :root{--serif:'Noto Serif TC',serif;--sans:'Noto Sans TC',sans-serif;--gold:#d4af37;--gold2:#b9873b}
+    html{scroll-behavior:smooth}body{font-family:var(--sans);background:#fafaf9;color:#0f172a}.font-serif{font-family:var(--serif)}.text-gold{color:var(--gold)}
+    .hero-bg{background:radial-gradient(circle at 75% 15%,rgba(212,175,55,.25),transparent 28%),linear-gradient(155deg,#020617 0%,#111111 42%,#1c1917 75%,#292524 100%)}
+    .fade-up{opacity:0;transform:translateY(22px);transition:opacity .7s ease,transform .7s ease}.fade-up.visible{opacity:1;transform:translateY(0)}
+    .glass{background:linear-gradient(135deg,rgba(255,255,255,.08),rgba(255,255,255,.03));border:1px solid rgba(255,255,255,.12);backdrop-filter:blur(10px)}
+    .soft-card{background:#fff;border:1px solid #e5e7eb;box-shadow:0 10px 28px rgba(15,23,42,.06)}.gold-btn{background:linear-gradient(135deg,#facc15 0%,#b45309 100%);color:#1a1208}
+    .light-message-box{background:radial-gradient(circle at top right,rgba(250,204,21,.16),transparent 34%),linear-gradient(180deg,#fffaf0,#fff7e6);border:1px solid rgba(190,145,70,.35);box-shadow:0 16px 38px rgba(80,50,20,.10)}
+    .divider{display:flex;align-items:center;gap:14px;color:#78716c;font-size:.75rem;letter-spacing:.12em}.divider:before,.divider:after{content:"";flex:1;height:1px;background:#e7e5e4}
+    .testimonial-card{position:relative;border-left:3px solid var(--gold)}.testimonial-card:before{content:'\275D';position:absolute;top:-8px;left:12px;font-size:2.3rem;color:var(--gold);opacity:.28;font-family:Georgia,serif;line-height:1}
+    .feedback-wrap{background:radial-gradient(circle at 80% 10%,rgba(212,175,55,.22),transparent 30%),linear-gradient(145deg,#0f172a,#1c1917 65%,#292524)}.feedback-wrap video{width:100%;background:#000;object-fit:contain}
+    @keyframes pulse-gold{0%,100%{box-shadow:0 0 0 0 rgba(250,204,21,.42)}50%{box-shadow:0 0 0 9px rgba(250,204,21,0)}}.pulse-gold{animation:pulse-gold 2.2s ease infinite}
+    @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}.floating-poster{animation:float 6s ease-in-out infinite}
+    ::-webkit-scrollbar{width:6px}::-webkit-scrollbar-track{background:#f1f1f1}::-webkit-scrollbar-thumb{background:#d4af37;border-radius:3px}
   </style>
 </head>
-
 <body>
   <nav class="sticky top-0 z-50 border-b border-stone-200 bg-white/95 backdrop-blur">
     <div class="mx-auto flex max-w-5xl items-center gap-3 px-4 py-3">
       <div class="min-w-0 flex-1 truncate font-serif text-sm font-semibold text-slate-900">國有器官｜台南放映</div>
       <div class="flex shrink-0 items-center gap-2">
-        <a href="#feedback" class="hidden sm:inline-flex rounded-lg border border-stone-300 px-3 py-2 text-xs font-semibold text-slate-700 hover:bg-stone-50">觀眾強力推薦</a>
+        <a href="#feedback" class="hidden sm:inline-flex rounded-lg border border-stone-300 px-3 py-2 text-xs font-semibold text-slate-700 hover:bg-stone-50">觀眾影片迴響</a>
         <a href="#signup" class="inline-flex rounded-lg bg-slate-900 px-4 py-2 text-xs font-semibold text-white hover:bg-slate-800">預約席次</a>
       </div>
     </div>
@@ -75,7 +54,6 @@
             <span class="font-semibold text-white">這是一部很多人看完，說必須讓更多人知道的電影。</span><br>
             <span class="mt-1 inline-block text-xs text-white/50">上映後曾受外部施壓試圖阻止播出，仍持續熱映中。</span>
           </p>
-
           <div class="glass relative mb-8 overflow-hidden rounded-2xl p-5 shadow-2xl">
             <div class="absolute -right-10 -top-10 h-32 w-32 rounded-full bg-yellow-400/10 blur-3xl"></div>
             <div class="relative space-y-4 text-sm">
@@ -84,13 +62,11 @@
               <div class="flex items-center gap-4"><div class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-white/10 text-gold">地</div><div><div class="mb-0.5 text-xs tracking-widest text-white/50">LOCATION</div><div class="font-semibold tracking-wide text-white">勞工育樂中心</div></div></div>
             </div>
           </div>
-
           <div class="relative z-10 flex flex-wrap gap-3">
             <a href="#signup" class="gold-btn pulse-gold inline-flex items-center gap-2 rounded-xl px-6 py-3 text-sm font-bold shadow-[0_0_24px_rgba(212,175,55,.45)] hover:brightness-110">預約限量席次 →</a>
             <a href="#feedback" class="inline-flex items-center gap-2 rounded-xl border border-white/30 px-6 py-3 text-sm font-semibold text-white hover:bg-white/10">觀看影片迴響</a>
           </div>
         </div>
-
         <div class="fade-up relative z-0" style="animation-delay:.2s">
           <div class="relative mx-auto max-w-xs md:max-w-[400px]">
             <div class="absolute inset-0 scale-90 rounded-2xl bg-yellow-400/25 blur-[42px]"></div>
@@ -154,7 +130,7 @@
 
     <section class="fade-up">
       <div class="divider mb-6"><span>7/11 一句話，一盞光</span></div>
-      <div class="light-message-box overflow-hidden rounded-3xl p-6 md:p-8 text-center">
+      <div class="light-message-box overflow-hidden rounded-3xl p-6 text-center md:p-8">
         <div class="mx-auto max-w-2xl">
           <div class="mb-2 text-xs font-bold tracking-[.22em] text-[#9a6a2f]">放映會前，先留下一句光</div>
           <h2 class="font-serif text-2xl font-bold leading-relaxed text-[#3b2a1d] md:text-3xl">7/11 前，邀請你留下一句話</h2>
@@ -174,29 +150,39 @@
     <section id="feedback" class="fade-up scroll-mt-20">
       <div class="divider mb-6"><span>觀眾影片迴響</span></div>
       <div class="soft-card overflow-hidden rounded-3xl">
-        <div class="grid gap-0 md:grid-cols-5">
-          <div class="feedback-video p-4 md:col-span-3 md:p-6">
-            <div class="overflow-hidden rounded-2xl bg-black shadow-2xl ring-1 ring-white/10">
-              <video controls playsinline preload="metadata">
+        <div class="feedback-wrap p-6 text-white md:p-8">
+          <div class="mx-auto max-w-3xl text-center">
+            <div class="mb-3 inline-flex rounded-full bg-white/10 px-3 py-1 text-xs font-bold tracking-widest text-gold ring-1 ring-white/15">真實觀眾回饋</div>
+            <h2 class="font-serif text-2xl font-bold leading-snug md:text-3xl">看過的人，留下了這些真實感受</h2>
+            <p class="mt-4 text-sm leading-8 text-white/75 md:text-base">三段短影片放在同一區塊，讓第一次進來的人可以快速聽見不同觀眾的感受，再決定是否預約席次。</p>
+          </div>
+          <div class="mt-7 grid gap-5 md:grid-cols-3">
+            <article class="overflow-hidden rounded-2xl bg-black/45 shadow-2xl ring-1 ring-white/10">
+              <video controls playsinline preload="metadata" class="aspect-video w-full bg-black object-contain">
                 <source src="./assets/feedback1.mp4" type="video/mp4">
                 您的瀏覽器不支援影片播放。
               </video>
-            </div>
+              <div class="bg-white p-4 text-slate-900"><div class="text-sm font-bold">觀眾回饋 1</div><p class="mt-1 text-xs leading-relaxed text-slate-500">一段真誠分享，讓觀眾先理解這部片為什麼值得走進現場。</p></div>
+            </article>
+            <article class="overflow-hidden rounded-2xl bg-black/45 shadow-2xl ring-1 ring-white/10">
+              <video controls playsinline preload="metadata" class="aspect-video w-full bg-black object-contain">
+                <source src="./assets/feedback2.mp4" type="video/mp4">
+                您的瀏覽器不支援影片播放。
+              </video>
+              <div class="bg-white p-4 text-slate-900"><div class="text-sm font-bold">觀眾回饋 2</div><p class="mt-1 text-xs leading-relaxed text-slate-500">不同觀眾的角度，能增加可信度，也讓頁面不只是單向介紹。</p></div>
+            </article>
+            <article class="overflow-hidden rounded-2xl bg-black/45 shadow-2xl ring-1 ring-white/10">
+              <video controls playsinline preload="metadata" class="aspect-video w-full bg-black object-contain">
+                <source src="./assets/feedback3.mp4" type="video/mp4">
+                您的瀏覽器不支援影片播放。
+              </video>
+              <div class="bg-white p-4 text-slate-900"><div class="text-sm font-bold">觀眾回饋 3</div><p class="mt-1 text-xs leading-relaxed text-slate-500">讓人看見真實反應，比單純介紹電影更容易建立信任。</p></div>
+            </article>
           </div>
-          <div class="flex flex-col justify-center p-6 md:col-span-2 md:p-8">
-            <div class="mb-3 inline-flex w-fit rounded-full bg-amber-50 px-3 py-1 text-xs font-bold tracking-widest text-[#9a6a2f] ring-1 ring-amber-200">真實觀眾回饋</div>
-            <h2 class="font-serif text-2xl font-bold leading-snug text-slate-900">先聽一位觀眾，看完後的真實感受</h2>
-            <p class="mt-4 text-sm leading-8 text-slate-600">
-              有時候，一段真誠的分享，比很多介紹更容易讓人理解：這不只是一部紀錄片，而是關於生命尊嚴、醫學倫理與良知選擇的提醒。
-            </p>
-            <a href="#signup" class="gold-btn mt-6 inline-flex w-full items-center justify-center rounded-xl px-5 py-3 text-sm font-bold shadow-[0_8px_20px_rgba(180,83,9,.25)] transition hover:brightness-110 sm:w-auto">看完後預約席次 →</a>
-          </div>
+          <div class="mt-7 flex justify-center"><a href="#signup" class="gold-btn inline-flex w-full items-center justify-center rounded-xl px-6 py-3 text-sm font-bold shadow-[0_8px_20px_rgba(180,83,9,.35)] transition hover:brightness-110 sm:w-auto">看完後預約席次 →</a></div>
         </div>
         <div class="border-t border-stone-200 bg-stone-50/70 p-5 md:p-6">
-          <div class="mb-4 flex items-center gap-3">
-            <h3 class="font-serif text-base font-bold text-slate-900">也有人這樣說</h3>
-            <a href="https://www.ganjingworld.com/zh-TW/playlist/1hof3om2pbb2yaNF1gXobqC1or0p" target="_blank" rel="noopener" class="ml-auto text-xs text-slate-500 underline underline-offset-2 hover:text-slate-900">查看更多迴響 →</a>
-          </div>
+          <div class="mb-4 flex items-center gap-3"><h3 class="font-serif text-base font-bold text-slate-900">也有人這樣說</h3><a href="https://www.ganjingworld.com/zh-TW/playlist/1hof3om2pbb2yaNF1gXobqC1or0p" target="_blank" rel="noopener" class="ml-auto text-xs text-slate-500 underline underline-offset-2 hover:text-slate-900">查看更多迴響 →</a></div>
           <div class="grid gap-4 sm:grid-cols-3">
             <div class="testimonial-card rounded-xl bg-white p-5 pl-6"><p class="text-sm leading-relaxed text-slate-600">這是我從小到大唯一看到感覺整個人快要窒息的電影。不是因為有驚悚畫面，而是終於意識到這整件事竟然如此真實，規模如此龐大。</p><div class="mt-3 text-xs text-slate-400">— 台灣觀影者</div></div>
             <div class="testimonial-card rounded-xl bg-white p-5 pl-6"><p class="text-sm leading-relaxed text-slate-600">我從未想到有人能在幾天內獲得器官，也不知道竟有人從其他國家飛去中國做移植手術。這真的讓人難以置信。</p><div class="mt-3 text-xs text-slate-400">— 美國賓州觀影者</div></div>
@@ -221,9 +207,7 @@
     <section id="signup" class="fade-up">
       <div class="divider mb-6"><span>立即預約</span></div>
       <div class="soft-card rounded-2xl p-6">
-        <div class="mb-6 flex items-start justify-between gap-4">
-          <div><h2 class="font-serif text-xl font-bold">免費預約座位</h2><p class="mt-1 text-sm text-slate-500">名額額滿即止，請盡早預約</p></div>
-        </div>
+        <div class="mb-6 flex items-start justify-between gap-4"><div><h2 class="font-serif text-xl font-bold">免費預約座位</h2><p class="mt-1 text-sm text-slate-500">名額額滿即止，請盡早預約</p></div></div>
         <div id="closedMsg" class="mb-4 hidden rounded-xl border border-amber-200 bg-amber-50 p-4 text-sm text-amber-900">本場次報名已截止或名額已滿，感謝您的關注。</div>
         <form id="signupForm" class="grid gap-4" method="post" action="">
           <input type="hidden" name="活動代碼" id="event_id" value="TNN-2026-07-12-1400" />
@@ -268,99 +252,13 @@
   </footer>
 
   <script>
-    function makeRegId() {
-      const s = Math.random().toString(16).slice(2, 10).toUpperCase();
-      return `TNN-${s}`;
-    }
-
-    function getTrackingNote() {
-      const p = new URLSearchParams(location.search);
-      const keys = ["utm_source","utm_medium","utm_campaign","utm_content","utm_term","fbclid","ref"];
-      const parts = [];
-      keys.forEach(k => { const v = p.get(k); if (v) parts.push(`${k}=${v}`); });
-      if (!p.get("ref")) { const r = document.referrer || ""; if (r) parts.push(`ref=${r}`); }
-      if (parts.length === 0) return "";
-      return `【追蹤】${parts.join(";")}`;
-    }
-
-    function getSourceTag() {
-      const p = new URLSearchParams(location.search);
-      const src = (p.get("src") || "").trim().toUpperCase();
-      if (!src) return "";
-      if (src === "A") return "【來源】FB";
-      if (src === "B") return "【來源】簡訊";
-      return "【來源】Other";
-    }
-
-    function buildNoteTail() {
-      return [getSourceTag(), getTrackingNote()].filter(Boolean).join(" ");
-    }
-
-    function bindAjaxSubmitOnce() {
-      const form = document.getElementById('signupForm');
-      if (!form || form.dataset.bound === "1") return;
-      form.dataset.bound = "1";
-      document.getElementById('thanks_url').value = location.origin + location.pathname.replace(/index\.html$/, '') + THANKS_URL.replace('./','');
-
-      form.addEventListener('submit', async (ev) => {
-        ev.preventDefault();
-        if (form.dataset.submitting === "1") return;
-        form.dataset.submitting = "1";
-
-        const btn = form.querySelector('button[type="submit"]');
-        const btnSpan = btn ? btn.querySelector('span') : null;
-        const btnText = btnSpan ? btnSpan.textContent : "";
-        if (btn) btn.disabled = true;
-        if (btnSpan) btnSpan.textContent = "送出中…";
-
-        try {
-          const regInput = document.getElementById("reg_id");
-          if (regInput && !regInput.value) regInput.value = makeRegId();
-          const rid = regInput ? regInput.value : makeRegId();
-
-          const tail = buildNoteTail();
-          const noteInput = form.querySelector('input[name="備註"]');
-          if (noteInput && tail) {
-            const cur = (noteInput.value || "").trim();
-            const hasSource = cur.includes("【來源】");
-            const hasTrack = cur.includes("【追蹤】");
-            const addParts = [];
-            if (tail.includes("【來源】") && !hasSource) addParts.push(getSourceTag());
-            if (tail.includes("【追蹤】") && !hasTrack) addParts.push(getTrackingNote());
-            if (addParts.length) noteInput.value = cur ? `${cur} ${addParts.join(" ")}` : addParts.join(" ");
-          }
-
-          const fd = new FormData(form);
-          await fetch(GAS_WEBAPP_URL, { method: "POST", body: fd, mode: "no-cors" });
-          location.href = `${THANKS_URL}?rid=${encodeURIComponent(rid)}`;
-        } catch (err) {
-          alert("送出失敗，請稍後再試一次。");
-          if (btn) btn.disabled = false;
-          if (btnSpan) btnSpan.textContent = btnText || "確認預約座位，取得入場資格";
-          form.dataset.submitting = "0";
-        }
-      });
-    }
-
-    function initFadeUp() {
-      const els = document.querySelectorAll('.fade-up');
-      if ('IntersectionObserver' in window) {
-        const obs = new IntersectionObserver((entries) => {
-          entries.forEach(entry => {
-            if (entry.isIntersecting) {
-              entry.target.classList.add('visible');
-              obs.unobserve(entry.target);
-            }
-          });
-        }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
-        els.forEach(el => obs.observe(el));
-      } else {
-        els.forEach(el => el.classList.add('visible'));
-      }
-    }
-
-    bindAjaxSubmitOnce();
-    initFadeUp();
+    function makeRegId(){const s=Math.random().toString(16).slice(2,10).toUpperCase();return `TNN-${s}`}
+    function getTrackingNote(){const p=new URLSearchParams(location.search);const keys=["utm_source","utm_medium","utm_campaign","utm_content","utm_term","fbclid","ref"];const parts=[];keys.forEach(k=>{const v=p.get(k);if(v)parts.push(`${k}=${v}`)});if(!p.get("ref")){const r=document.referrer||"";if(r)parts.push(`ref=${r}`)}return parts.length?`【追蹤】${parts.join(";")}`:""}
+    function getSourceTag(){const p=new URLSearchParams(location.search);const src=(p.get("src")||"").trim().toUpperCase();if(!src)return "";if(src==="A")return "【來源】FB";if(src==="B")return "【來源】簡訊";return "【來源】Other"}
+    function buildNoteTail(){return [getSourceTag(),getTrackingNote()].filter(Boolean).join(" ")}
+    function bindAjaxSubmitOnce(){const form=document.getElementById('signupForm');if(!form||form.dataset.bound==="1")return;form.dataset.bound="1";document.getElementById('thanks_url').value=location.origin+location.pathname.replace(/index\.html$/,'')+THANKS_URL.replace('./','');form.addEventListener('submit',async ev=>{ev.preventDefault();if(form.dataset.submitting==="1")return;form.dataset.submitting="1";const btn=form.querySelector('button[type="submit"]');const btnSpan=btn?btn.querySelector('span'):null;const btnText=btnSpan?btnSpan.textContent:"";if(btn)btn.disabled=true;if(btnSpan)btnSpan.textContent="送出中…";try{const regInput=document.getElementById("reg_id");if(regInput&&!regInput.value)regInput.value=makeRegId();const rid=regInput?regInput.value:makeRegId();const tail=buildNoteTail();const noteInput=form.querySelector('input[name="備註"]');if(noteInput&&tail){const cur=(noteInput.value||"").trim();const hasSource=cur.includes("【來源】");const hasTrack=cur.includes("【追蹤】");const addParts=[];if(tail.includes("【來源】")&&!hasSource)addParts.push(getSourceTag());if(tail.includes("【追蹤】")&&!hasTrack)addParts.push(getTrackingNote());if(addParts.length)noteInput.value=cur?`${cur} ${addParts.join(" ")}`:addParts.join(" ")}const fd=new FormData(form);await fetch(GAS_WEBAPP_URL,{method:"POST",body:fd,mode:"no-cors"});location.href=`${THANKS_URL}?rid=${encodeURIComponent(rid)}`}catch(err){alert("送出失敗，請稍後再試一次。");if(btn)btn.disabled=false;if(btnSpan)btnSpan.textContent=btnText||"確認預約座位，取得入場資格";form.dataset.submitting="0"}})}
+    function initFadeUp(){const els=document.querySelectorAll('.fade-up');if('IntersectionObserver'in window){const obs=new IntersectionObserver(entries=>{entries.forEach(entry=>{if(entry.isIntersecting){entry.target.classList.add('visible');obs.unobserve(entry.target)}})},{threshold:.1,rootMargin:'0px 0px -40px 0px'});els.forEach(el=>obs.observe(el))}else{els.forEach(el=>el.classList.add('visible'))}}
+    bindAjaxSubmitOnce();initFadeUp();
   </script>
 </body>
 </html>
