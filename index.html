@@ -37,6 +37,8 @@
     .divider::before,.divider::after { content:""; flex:1; height:1px; background:#e7e5e4; }
     .testimonial-card { position:relative; border-left:3px solid var(--gold); }
     .testimonial-card::before { content:'\275D'; position:absolute; top:-8px; left:12px; font-size:2.3rem; color:var(--gold); opacity:.28; font-family:Georgia,serif; line-height:1; }
+    .feedback-video { background: radial-gradient(circle at 80% 10%, rgba(212,175,55,.22), transparent 30%), linear-gradient(145deg,#0f172a,#1c1917 65%,#292524); }
+    .feedback-video video { width:100%; max-height:520px; background:#000; object-fit:contain; }
     @keyframes pulse-gold { 0%,100%{box-shadow:0 0 0 0 rgba(250,204,21,.42)} 50%{box-shadow:0 0 0 9px rgba(250,204,21,0)} }
     .pulse-gold { animation:pulse-gold 2.2s ease infinite; }
     @keyframes float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-12px)} }
@@ -52,7 +54,7 @@
     <div class="mx-auto flex max-w-5xl items-center gap-3 px-4 py-3">
       <div class="min-w-0 flex-1 truncate font-serif text-sm font-semibold text-slate-900">國有器官｜台南放映</div>
       <div class="flex shrink-0 items-center gap-2">
-        <a href="https://www.ganjingworld.com/s/7Q86RyNxyj" target="_blank" rel="noopener" class="hidden sm:inline-flex rounded-lg border border-stone-300 px-3 py-2 text-xs font-semibold text-slate-700 hover:bg-stone-50">觀眾強力推薦</a>
+        <a href="#feedback" class="hidden sm:inline-flex rounded-lg border border-stone-300 px-3 py-2 text-xs font-semibold text-slate-700 hover:bg-stone-50">觀眾強力推薦</a>
         <a href="#signup" class="inline-flex rounded-lg bg-slate-900 px-4 py-2 text-xs font-semibold text-white hover:bg-slate-800">預約席次</a>
       </div>
     </div>
@@ -85,7 +87,7 @@
 
           <div class="relative z-10 flex flex-wrap gap-3">
             <a href="#signup" class="gold-btn pulse-gold inline-flex items-center gap-2 rounded-xl px-6 py-3 text-sm font-bold shadow-[0_0_24px_rgba(212,175,55,.45)] hover:brightness-110">預約限量席次 →</a>
-            <a href="https://www.ganjingworld.com/zh-TW/playlist/1hof3om2pbb2yaNF1gXobqC1or0p" target="_blank" rel="noopener" class="inline-flex items-center gap-2 rounded-xl border border-white/30 px-6 py-3 text-sm font-semibold text-white hover:bg-white/10">觀看影片迴響</a>
+            <a href="#feedback" class="inline-flex items-center gap-2 rounded-xl border border-white/30 px-6 py-3 text-sm font-semibold text-white hover:bg-white/10">觀看影片迴響</a>
           </div>
         </div>
 
@@ -169,17 +171,37 @@
       </div>
     </section>
 
-    <section class="fade-up">
-      <div class="divider mb-6"><span>觀眾迴響</span></div>
-      <div class="soft-card rounded-2xl p-6">
-        <div class="mb-5 flex items-center gap-3">
-          <h2 class="font-serif text-lg font-bold">看過的人這麼說</h2>
-          <a href="https://www.ganjingworld.com/zh-TW/playlist/1hof3om2pbb2yaNF1gXobqC1or0p" target="_blank" rel="noopener" class="ml-auto text-xs text-slate-500 underline underline-offset-2 hover:text-slate-900">查看更多迴響 →</a>
+    <section id="feedback" class="fade-up scroll-mt-20">
+      <div class="divider mb-6"><span>觀眾影片迴響</span></div>
+      <div class="soft-card overflow-hidden rounded-3xl">
+        <div class="grid gap-0 md:grid-cols-5">
+          <div class="feedback-video p-4 md:col-span-3 md:p-6">
+            <div class="overflow-hidden rounded-2xl bg-black shadow-2xl ring-1 ring-white/10">
+              <video controls playsinline preload="metadata">
+                <source src="./assets/feedback1.mp4" type="video/mp4">
+                您的瀏覽器不支援影片播放。
+              </video>
+            </div>
+          </div>
+          <div class="flex flex-col justify-center p-6 md:col-span-2 md:p-8">
+            <div class="mb-3 inline-flex w-fit rounded-full bg-amber-50 px-3 py-1 text-xs font-bold tracking-widest text-[#9a6a2f] ring-1 ring-amber-200">真實觀眾回饋</div>
+            <h2 class="font-serif text-2xl font-bold leading-snug text-slate-900">先聽一位觀眾，看完後的真實感受</h2>
+            <p class="mt-4 text-sm leading-8 text-slate-600">
+              有時候，一段真誠的分享，比很多介紹更容易讓人理解：這不只是一部紀錄片，而是關於生命尊嚴、醫學倫理與良知選擇的提醒。
+            </p>
+            <a href="#signup" class="gold-btn mt-6 inline-flex w-full items-center justify-center rounded-xl px-5 py-3 text-sm font-bold shadow-[0_8px_20px_rgba(180,83,9,.25)] transition hover:brightness-110 sm:w-auto">看完後預約席次 →</a>
+          </div>
         </div>
-        <div class="grid gap-4 sm:grid-cols-3">
-          <div class="testimonial-card rounded-xl bg-stone-50 p-5 pl-6"><p class="text-sm leading-relaxed text-slate-600">這是我從小到大唯一看到感覺整個人快要窒息的電影。不是因為有驚悚畫面，而是終於意識到這整件事竟然如此真實，規模如此龐大。</p><div class="mt-3 text-xs text-slate-400">— 台灣觀影者</div></div>
-          <div class="testimonial-card rounded-xl bg-stone-50 p-5 pl-6"><p class="text-sm leading-relaxed text-slate-600">我從未想到有人能在幾天內獲得器官，也不知道竟有人從其他國家飛去中國做移植手術。這真的讓人難以置信。</p><div class="mt-3 text-xs text-slate-400">— 美國賓州觀影者</div></div>
-          <div class="testimonial-card rounded-xl bg-stone-50 p-5 pl-6"><p class="text-sm leading-relaxed text-slate-600">令人震驚、扣人心弦且引人入勝的人權紀錄片——這是一部成功的作品。</p><div class="mt-3 text-xs text-slate-400">— New York Movie Guru</div></div>
+        <div class="border-t border-stone-200 bg-stone-50/70 p-5 md:p-6">
+          <div class="mb-4 flex items-center gap-3">
+            <h3 class="font-serif text-base font-bold text-slate-900">也有人這樣說</h3>
+            <a href="https://www.ganjingworld.com/zh-TW/playlist/1hof3om2pbb2yaNF1gXobqC1or0p" target="_blank" rel="noopener" class="ml-auto text-xs text-slate-500 underline underline-offset-2 hover:text-slate-900">查看更多迴響 →</a>
+          </div>
+          <div class="grid gap-4 sm:grid-cols-3">
+            <div class="testimonial-card rounded-xl bg-white p-5 pl-6"><p class="text-sm leading-relaxed text-slate-600">這是我從小到大唯一看到感覺整個人快要窒息的電影。不是因為有驚悚畫面，而是終於意識到這整件事竟然如此真實，規模如此龐大。</p><div class="mt-3 text-xs text-slate-400">— 台灣觀影者</div></div>
+            <div class="testimonial-card rounded-xl bg-white p-5 pl-6"><p class="text-sm leading-relaxed text-slate-600">我從未想到有人能在幾天內獲得器官，也不知道竟有人從其他國家飛去中國做移植手術。這真的讓人難以置信。</p><div class="mt-3 text-xs text-slate-400">— 美國賓州觀影者</div></div>
+            <div class="testimonial-card rounded-xl bg-white p-5 pl-6"><p class="text-sm leading-relaxed text-slate-600">令人震驚、扣人心弦且引人入勝的人權紀錄片——這是一部成功的作品。</p><div class="mt-3 text-xs text-slate-400">— New York Movie Guru</div></div>
+          </div>
         </div>
       </div>
     </section>
