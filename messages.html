@@ -1,0 +1,538 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>一句話，一盞光｜留言整理</title>
+  <style>
+    :root {
+      --bg: #f7f2e8;
+      --paper: #fffaf0;
+      --paper2: #fffdf7;
+      --ink: #2f241a;
+      --muted: #7b6a55;
+      --gold: #b9873b;
+      --gold2: #d8b46a;
+      --line: rgba(185, 135, 59, .25);
+      --shadow: 0 18px 44px rgba(85, 57, 24, .11);
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { margin: 0; background:
+      radial-gradient(circle at 15% 4%, rgba(216,180,106,.23), transparent 28%),
+      radial-gradient(circle at 88% 18%, rgba(185,135,59,.16), transparent 24%),
+      var(--bg); color: var(--ink);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans TC", "PingFang TC", "Microsoft JhengHei", sans-serif;
+      line-height: 1.75;
+    }
+    a { color: inherit; }
+    .wrap { width: min(1080px, calc(100% - 32px)); margin: 0 auto; }
+    .hero { padding: 54px 0 28px; text-align: center; }
+    .eyebrow { color: var(--gold); font-weight: 700; letter-spacing: .22em; font-size: 13px; margin-bottom: 10px; }
+    h1 { margin: 0; font-family: Georgia, "Noto Serif TC", serif; font-size: clamp(34px, 6vw, 64px); line-height: 1.18; letter-spacing: .03em; }
+    .subtitle { margin: 16px auto 0; max-width: 760px; color: var(--muted); font-size: clamp(16px, 2.5vw, 20px); }
+    .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin: 28px auto 0; max-width: 720px; }
+    .stat { background: rgba(255,255,255,.65); border: 1px solid var(--line); border-radius: 20px; padding: 16px; box-shadow: 0 10px 30px rgba(85,57,24,.06); }
+    .stat strong { display: block; font-size: 28px; line-height: 1.1; color: var(--gold); }
+    .stat span { display: block; margin-top: 5px; color: var(--muted); font-size: 13px; }
+    .intro-box { margin: 30px auto 0; max-width: 860px; background: linear-gradient(180deg, rgba(255,250,240,.95), rgba(255,255,255,.78)); border: 1px solid var(--line); border-radius: 26px; padding: 24px; box-shadow: var(--shadow); text-align: left; }
+    .intro-box h2 { margin: 0 0 12px; font-family: Georgia, "Noto Serif TC", serif; font-size: 24px; }
+    .intro-box p { margin: 0; color: #4b3928; }
+    .cta-row { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 20px; }
+    .btn { display: inline-flex; align-items: center; justify-content: center; border-radius: 999px; padding: 12px 20px; text-decoration: none; font-weight: 800; font-size: 15px; }
+    .btn.primary { background: linear-gradient(135deg, var(--gold), var(--gold2)); color: white; box-shadow: 0 10px 22px rgba(185,135,59,.25); }
+    .btn.secondary { border: 1px solid var(--line); color: #6b4a21; background: rgba(255,255,255,.55); }
+    .section { padding: 28px 0; }
+    .section-title { display: flex; align-items: center; gap: 14px; margin: 0 0 18px; color: var(--muted); font-size: 13px; letter-spacing: .12em; font-weight: 800; }
+    .section-title::before, .section-title::after { content: ""; height: 1px; background: var(--line); flex: 1; }
+    .feature-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+    .message-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+    .message-card { position: relative; overflow: hidden; background: rgba(255,255,255,.82); border: 1px solid rgba(185,135,59,.18); border-radius: 22px; padding: 22px 20px 18px; box-shadow: 0 12px 28px rgba(85,57,24,.07); min-height: 190px; display: flex; flex-direction: column; }
+    .featured-card { background: linear-gradient(180deg, #fffdf7, #fff5df); border-color: rgba(185,135,59,.35); }
+    .quote-mark { position: absolute; right: 18px; top: 0; font-family: Georgia, serif; font-size: 72px; color: rgba(185,135,59,.13); line-height: 1; }
+    .message-text { margin: 0; white-space: normal; font-size: 16px; color: #332518; position: relative; z-index: 1; }
+    .card-footer { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 12px; margin-top: auto; padding-top: 18px; border-top: 1px solid rgba(185,135,59,.14); }
+    .name { color: #6b4a21; font-weight: 800; font-size: 14px; }
+    .time { color: #9a8a75; font-size: 12px; margin-left: auto; }
+    .tag-row { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
+    .tag { display: inline-flex; border-radius: 999px; background: rgba(185,135,59,.10); color: #8a5d23; font-size: 12px; padding: 3px 9px; }
+    .toolbar { position: sticky; top: 0; z-index: 10; margin: 8px 0 20px; padding: 12px; background: rgba(247,242,232,.86); backdrop-filter: blur(10px); border: 1px solid rgba(185,135,59,.12); border-radius: 18px; display: grid; grid-template-columns: 1fr auto; gap: 10px; align-items: center; }
+    .search { width: 100%; border: 1px solid rgba(185,135,59,.22); background: rgba(255,255,255,.7); border-radius: 999px; padding: 11px 15px; font-size: 15px; outline: none; }
+    .chips { display: flex; gap: 8px; flex-wrap: wrap; justify-content: flex-end; }
+    .chip { border: 1px solid rgba(185,135,59,.22); background: rgba(255,255,255,.7); color: #6b4a21; border-radius: 999px; padding: 8px 12px; font-weight: 700; font-size: 13px; cursor: pointer; }
+    .chip.active { background: #6b4a21; color: #fff; border-color: #6b4a21; }
+    .share-box { margin-top: 12px; background: rgba(255,255,255,.65); border: 1px dashed rgba(185,135,59,.32); border-radius: 18px; padding: 16px; color: #4b3928; white-space: pre-wrap; font-size: 15px; }
+    .footer { color: var(--muted); text-align: center; font-size: 13px; padding: 34px 0 46px; }
+    @media (max-width: 850px) {
+      .stats { grid-template-columns: 1fr; }
+      .feature-grid, .message-grid { grid-template-columns: 1fr; }
+      .toolbar { grid-template-columns: 1fr; position: static; }
+      .chips { justify-content: flex-start; }
+      .hero { padding-top: 38px; }
+      .intro-box { padding: 20px; }
+      .message-card { min-height: auto; }
+    }
+    @media print {
+      body { background: #fff; }
+      .toolbar, .cta-row { display: none; }
+      .message-card { break-inside: avoid; box-shadow: none; }
+    }
+  </style>
+</head>
+<body>
+  <header class="hero wrap">
+    <div class="eyebrow">7/11 一句話，一盞光</div>
+    <h1>目前收到的留言</h1>
+    <p class="subtitle">下午收集良知，晚上點亮真相。這些留言讓我們看見，民眾也願意用一句話，表達祝福、善意與對良知的支持。</p>
+    <div class="stats">
+      <div class="stat"><strong>48</strong><span>目前留言數</span></div>
+      <div class="stat"><strong>32</strong><span>不同署名</span></div>
+      <div class="stat"><strong>2026/7/2</strong><span>更新至</span></div>
+    </div>
+    <div class="intro-box">
+      <h2>給同修看的重點</h2>
+      <p>這些留言不是單純的文字，而是一份份善念。有人寫祝福，有人鼓勵堅持，也有人提到真相、良知、正義與「真、善、忍」。這讓我們看見：不是只有我們在說真相，而是眾生也正在用一句話，表達他們不願沉默。</p>
+      <div class="cta-row">
+        <a class="btn primary" href="https://write.goodlighttaiwan.org" target="_blank" rel="noopener">邀請更多人留下一句話</a>
+        <a class="btn secondary" href="#all">查看全部留言</a>
+      </div>
+      <div class="share-box">各位同修好，這是目前「一句話，一盞光」線上收到的留言整理。
+可以看到，民眾用很簡單的一句話，表達祝福、鼓勵，也表達對善良、良知與真相的支持。
+
+不是只有我們在說真相，而是眾生也正在用一句話，表達他們不願沉默。</div>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section class="section">
+      <div class="section-title"><span>精選留言</span></div>
+      <div class="feature-grid">
+        <article class="message-card featured-card" data-tags="真善忍 祝福 鼓勵" data-search="世界需要真.善.忍，你們的堅持為這世界帶來希望的光。 德經">
+  <div class="quote-mark">“</div>
+  <p class="message-text">世界需要真.善.忍，你們的堅持為這世界帶來希望的光。</p>
+  <div class="card-footer"><span class="name">— 德經</span><span class="time">2026/6/25 下午 9:51:49</span></div>
+  <div class="tag-row"><span class="tag">真善忍</span><span class="tag">祝福</span><span class="tag">鼓勵</span></div>
+</article>
+<article class="message-card featured-card" data-tags="祝福" data-search="願你始終保有內心的善良與希望。
+黑夜終會過去，願平安與光明常伴你左右。 台南市民">
+  <div class="quote-mark">“</div>
+  <p class="message-text">願你始終保有內心的善良與希望。<br>黑夜終會過去，願平安與光明常伴你左右。</p>
+  <div class="card-footer"><span class="name">— 台南市民</span><span class="time">2026/6/26 下午 4:54:48</span></div>
+  <div class="tag-row"><span class="tag">祝福</span></div>
+</article>
+<article class="message-card featured-card" data-tags="祝福 鼓勵" data-search="願善良不被辜負，願勇氣帶來希望。
+祝福你平安、健康，願未來充滿光明。 阿仁">
+  <div class="quote-mark">“</div>
+  <p class="message-text">願善良不被辜負，願勇氣帶來希望。<br>祝福你平安、健康，願未來充滿光明。</p>
+  <div class="card-footer"><span class="name">— 阿仁</span><span class="time">2026/6/26 下午 4:56:41</span></div>
+  <div class="tag-row"><span class="tag">祝福</span><span class="tag">鼓勵</span></div>
+</article>
+<article class="message-card featured-card" data-tags="真善忍 祝福" data-search="為了世人
+謝謝您沒有放棄
+真 善 忍 將使世界更美好 欣">
+  <div class="quote-mark">“</div>
+  <p class="message-text">為了世人<br>謝謝您沒有放棄<br>真 善 忍 將使世界更美好</p>
+  <div class="card-footer"><span class="name">— 欣</span><span class="time">2026/6/27 下午 9:05:26</span></div>
+  <div class="tag-row"><span class="tag">真善忍</span><span class="tag">祝福</span></div>
+</article>
+<article class="message-card featured-card" data-tags="祝福 鼓勵" data-search="願你在黑暗中，仍不放棄良善與希望，總有一天會迎來光明的未來。--娟 送出祝福的人">
+  <div class="quote-mark">“</div>
+  <p class="message-text">願你在黑暗中，仍不放棄良善與希望，總有一天會迎來光明的未來。--娟</p>
+  <div class="card-footer"><span class="name">— 送出祝福的人</span><span class="time">2026/6/28 下午 8:29:27</span></div>
+  <div class="tag-row"><span class="tag">祝福</span><span class="tag">鼓勵</span></div>
+</article>
+<article class="message-card featured-card" data-tags="真善忍 祝福 良知 鼓勵" data-search="世界需要「真、善、忍」!
+你的堅持是對的!
+這些日子難為你了!
+真相已大白，光明就要到來。
+你不孤單!世上有上億人與你同在。
+我們是心心相連的。
+願你勇敢堅持!
+一起迎接美好的未來! 一份善意">
+  <div class="quote-mark">“</div>
+  <p class="message-text">世界需要「真、善、忍」!<br>你的堅持是對的!<br>這些日子難為你了!<br>真相已大白，光明就要到來。<br>你不孤單!世上有上億人與你同在。<br>我們是心心相連的。<br>願你勇敢堅持!<br>一起迎接美好的未來!</p>
+  <div class="card-footer"><span class="name">— 一份善意</span><span class="time">2026/7/1 下午 1:26:06</span></div>
+  <div class="tag-row"><span class="tag">真善忍</span><span class="tag">祝福</span><span class="tag">良知</span><span class="tag">鼓勵</span></div>
+</article>
+<article class="message-card featured-card" data-tags="真善忍 祝福 良知 鼓勵" data-search="真善忍是人的普世價值  
+善良人不應該被迫害
+你的堅持  讓我看見真相
+願你一切平安 讓世界更光明 雪兒">
+  <div class="quote-mark">“</div>
+  <p class="message-text">真善忍是人的普世價值  <br>善良人不應該被迫害<br>你的堅持  讓我看見真相<br>願你一切平安 讓世界更光明</p>
+  <div class="card-footer"><span class="name">— 雪兒</span><span class="time">2026/7/2 下午 4:22:34</span></div>
+  <div class="tag-row"><span class="tag">真善忍</span><span class="tag">祝福</span><span class="tag">良知</span><span class="tag">鼓勵</span></div>
+</article>
+      </div>
+    </section>
+
+    <section class="section" id="all">
+      <div class="section-title"><span>全部留言</span></div>
+      <div class="toolbar">
+        <input class="search" id="searchInput" placeholder="搜尋留言或署名，例如：平安、真相、台南朋友">
+        <div class="chips" id="chips">
+          <button class="chip active" data-filter="全部">全部</button>
+          <button class="chip" data-filter="祝福">祝福</button>
+          <button class="chip" data-filter="良知">良知</button>
+          <button class="chip" data-filter="鼓勵">鼓勵</button>
+          <button class="chip" data-filter="真善忍">真善忍</button>
+          <button class="chip" data-filter="其他">其他</button>
+        </div>
+      </div>
+      <div class="message-grid" id="messageGrid">
+        <article class="message-card" data-tags="真善忍 祝福 鼓勵" data-search="世界需要真.善.忍，你們的堅持為這世界帶來希望的光。 德經">
+  <div class="quote-mark">“</div>
+  <p class="message-text">世界需要真.善.忍，你們的堅持為這世界帶來希望的光。</p>
+  <div class="card-footer"><span class="name">— 德經</span><span class="time">2026/6/25 下午 9:51:49</span></div>
+  <div class="tag-row"><span class="tag">真善忍</span><span class="tag">祝福</span><span class="tag">鼓勵</span></div>
+</article>
+<article class="message-card" data-tags="良知" data-search="願真相被更多人看見 一位關心的人">
+  <div class="quote-mark">“</div>
+  <p class="message-text">願真相被更多人看見</p>
+  <div class="card-footer"><span class="name">— 一位關心的人</span><span class="time">2026/6/26 下午 4:54:41</span></div>
+  <div class="tag-row"><span class="tag">良知</span></div>
+</article>
+<article class="message-card" data-tags="祝福" data-search="願你始終保有內心的善良與希望。
+黑夜終會過去，願平安與光明常伴你左右。 台南市民">
+  <div class="quote-mark">“</div>
+  <p class="message-text">願你始終保有內心的善良與希望。<br>黑夜終會過去，願平安與光明常伴你左右。</p>
+  <div class="card-footer"><span class="name">— 台南市民</span><span class="time">2026/6/26 下午 4:54:48</span></div>
+  <div class="tag-row"><span class="tag">祝福</span></div>
+</article>
+<article class="message-card" data-tags="祝福 鼓勵" data-search="願善良不被辜負，願勇氣帶來希望。
+祝福你平安、健康，願未來充滿光明。 阿仁">
+  <div class="quote-mark">“</div>
+  <p class="message-text">願善良不被辜負，願勇氣帶來希望。<br>祝福你平安、健康，願未來充滿光明。</p>
+  <div class="card-footer"><span class="name">— 阿仁</span><span class="time">2026/6/26 下午 4:56:41</span></div>
+  <div class="tag-row"><span class="tag">祝福</span><span class="tag">鼓勵</span></div>
+</article>
+<article class="message-card" data-tags="良知 鼓勵" data-search="堅持到底
+永不放棄
+真理不容踐踏
+正義終究會戰勝邪惡 法輪功學員">
+  <div class="quote-mark">“</div>
+  <p class="message-text">堅持到底<br>永不放棄<br>真理不容踐踏<br>正義終究會戰勝邪惡</p>
+  <div class="card-footer"><span class="name">— 法輪功學員</span><span class="time">2026/6/26 下午 4:59:21</span></div>
+  <div class="tag-row"><span class="tag">良知</span><span class="tag">鼓勵</span></div>
+</article>
+<article class="message-card" data-tags="良知" data-search="善良，是人的天性，不應被抹滅掉！
+
+自由，是基本人權，不應被剝奪掉！ 一位關心的人">
+  <div class="quote-mark">“</div>
+  <p class="message-text">善良，是人的天性，不應被抹滅掉！<br><br>自由，是基本人權，不應被剝奪掉！</p>
+  <div class="card-footer"><span class="name">— 一位關心的人</span><span class="time">2026/6/26 下午 5:07:07</span></div>
+  <div class="tag-row"><span class="tag">良知</span></div>
+</article>
+<article class="message-card" data-tags="良知" data-search="願真相被更多人看見 一位關心的人">
+  <div class="quote-mark">“</div>
+  <p class="message-text">願真相被更多人看見</p>
+  <div class="card-footer"><span class="name">— 一位關心的人</span><span class="time">2026/6/26 下午 5:13:11</span></div>
+  <div class="tag-row"><span class="tag">良知</span></div>
+</article>
+<article class="message-card" data-tags="良知" data-search="善良不該被迫害 一位關心的人">
+  <div class="quote-mark">“</div>
+  <p class="message-text">善良不該被迫害</p>
+  <div class="card-footer"><span class="name">— 一位關心的人</span><span class="time">2026/6/26 下午 5:14:05</span></div>
+  <div class="tag-row"><span class="tag">良知</span></div>
+</article>
+<article class="message-card" data-tags="祝福" data-search="願平安相伴，早日歸來。 一位關心的人">
+  <div class="quote-mark">“</div>
+  <p class="message-text">願平安相伴，早日歸來。</p>
+  <div class="card-footer"><span class="name">— 一位關心的人</span><span class="time">2026/6/26 下午 5:38:08</span></div>
+  <div class="tag-row"><span class="tag">祝福</span></div>
+</article>
+<article class="message-card" data-tags="良知 鼓勵" data-search="信仰存在於行動中，正義存在於受難中，持續堅持，永不屈服，幸福終會到來 一位關心的人">
+  <div class="quote-mark">“</div>
+  <p class="message-text">信仰存在於行動中，正義存在於受難中，持續堅持，永不屈服，幸福終會到來</p>
+  <div class="card-footer"><span class="name">— 一位關心的人</span><span class="time">2026/6/26 下午 5:38:21</span></div>
+  <div class="tag-row"><span class="tag">良知</span><span class="tag">鼓勵</span></div>
+</article>
+<article class="message-card" data-tags="其他" data-search="願良善的人終會被善待 一位關心的人">
+  <div class="quote-mark">“</div>
+  <p class="message-text">願良善的人終會被善待</p>
+  <div class="card-footer"><span class="name">— 一位關心的人</span><span class="time">2026/6/26 下午 5:39:20</span></div>
+  <div class="tag-row"><span class="tag">其他</span></div>
+</article>
+<article class="message-card" data-tags="良知" data-search="善良不該被迫害 一位關心的人">
+  <div class="quote-mark">“</div>
+  <p class="message-text">善良不該被迫害</p>
+  <div class="card-footer"><span class="name">— 一位關心的人</span><span class="time">2026/6/26 下午 5:43:43</span></div>
+  <div class="tag-row"><span class="tag">良知</span></div>
+</article>
+<article class="message-card" data-tags="良知" data-search="願真相被更多人看見 一位關心的人">
+  <div class="quote-mark">“</div>
+  <p class="message-text">願真相被更多人看見</p>
+  <div class="card-footer"><span class="name">— 一位關心的人</span><span class="time">2026/6/26 下午 5:44:17</span></div>
+  <div class="tag-row"><span class="tag">良知</span></div>
+</article>
+<article class="message-card" data-tags="鼓勵" data-search="謝謝你們沒有放棄信仰，謝謝你堅持善良，謝謝你講真象，謝謝你努力不懈，我敬佩你們，繼續加油! 一位關心的人">
+  <div class="quote-mark">“</div>
+  <p class="message-text">謝謝你們沒有放棄信仰，謝謝你堅持善良，謝謝你講真象，謝謝你努力不懈，我敬佩你們，繼續加油!</p>
+  <div class="card-footer"><span class="name">— 一位關心的人</span><span class="time">2026/6/26 下午 7:07:52</span></div>
+  <div class="tag-row"><span class="tag">鼓勵</span></div>
+</article>
+<article class="message-card" data-tags="其他" data-search="內在小孩，謝謝你、我愛你、對不起、請原諒我~ 一位關心的人">
+  <div class="quote-mark">“</div>
+  <p class="message-text">內在小孩，謝謝你、我愛你、對不起、請原諒我~</p>
+  <div class="card-footer"><span class="name">— 一位關心的人</span><span class="time">2026/6/26 下午 8:09:59</span></div>
+  <div class="tag-row"><span class="tag">其他</span></div>
+</article>
+<article class="message-card" data-tags="良知" data-search="願這個世界明白真相的人越來越多，不被謊言蒙蔽，不為利益捨棄人類道德的底線 一位關心的人">
+  <div class="quote-mark">“</div>
+  <p class="message-text">願這個世界明白真相的人越來越多，不被謊言蒙蔽，不為利益捨棄人類道德的底線</p>
+  <div class="card-footer"><span class="name">— 一位關心的人</span><span class="time">2026/6/27 上午 1:18:10</span></div>
+  <div class="tag-row"><span class="tag">良知</span></div>
+</article>
+<article class="message-card" data-tags="祝福 鼓勵" data-search="禮敬各位信仰篤定的勇士者~加油!
+般若彼岸即現前方
+祝福你~辛苦啦 一位關心的人">
+  <div class="quote-mark">“</div>
+  <p class="message-text">禮敬各位信仰篤定的勇士者~加油!<br>般若彼岸即現前方<br>祝福你~辛苦啦</p>
+  <div class="card-footer"><span class="name">— 一位關心的人</span><span class="time">2026/6/27 上午 8:22:02</span></div>
+  <div class="tag-row"><span class="tag">祝福</span><span class="tag">鼓勵</span></div>
+</article>
+<article class="message-card" data-tags="其他" data-search="平常人做平常是。平常過一生 一位關心的人">
+  <div class="quote-mark">“</div>
+  <p class="message-text">平常人做平常是。平常過一生</p>
+  <div class="card-footer"><span class="name">— 一位關心的人</span><span class="time">2026/6/27 下午 4:26:45</span></div>
+  <div class="tag-row"><span class="tag">其他</span></div>
+</article>
+<article class="message-card" data-tags="真善忍 祝福" data-search="為了世人
+謝謝您沒有放棄
+真 善 忍 將使世界更美好 欣">
+  <div class="quote-mark">“</div>
+  <p class="message-text">為了世人<br>謝謝您沒有放棄<br>真 善 忍 將使世界更美好</p>
+  <div class="card-footer"><span class="name">— 欣</span><span class="time">2026/6/27 下午 9:05:26</span></div>
+  <div class="tag-row"><span class="tag">真善忍</span><span class="tag">祝福</span></div>
+</article>
+<article class="message-card" data-tags="其他" data-search="信仰無罪 惡政該亡 一位普通人">
+  <div class="quote-mark">“</div>
+  <p class="message-text">信仰無罪 惡政該亡</p>
+  <div class="card-footer"><span class="name">— 一位普通人</span><span class="time">2026/6/27 下午 10:16:59</span></div>
+  <div class="tag-row"><span class="tag">其他</span></div>
+</article>
+<article class="message-card" data-tags="鼓勵" data-search="加油 遠方的朋友">
+  <div class="quote-mark">“</div>
+  <p class="message-text">加油</p>
+  <div class="card-footer"><span class="name">— 遠方的朋友</span><span class="time">2026/6/27 下午 10:50:59</span></div>
+  <div class="tag-row"><span class="tag">鼓勵</span></div>
+</article>
+<article class="message-card" data-tags="祝福" data-search="請先開始學會愛自己 願你平安的人">
+  <div class="quote-mark">“</div>
+  <p class="message-text">請先開始學會愛自己</p>
+  <div class="card-footer"><span class="name">— 願你平安的人</span><span class="time">2026/6/27 下午 11:02:13</span></div>
+  <div class="tag-row"><span class="tag">祝福</span></div>
+</article>
+<article class="message-card" data-tags="祝福" data-search="請你相信，世界上還有善良的人，雖然不認識，但還是在世界的一個小角落祝福您能夠心想事成。 復列白">
+  <div class="quote-mark">“</div>
+  <p class="message-text">請你相信，世界上還有善良的人，雖然不認識，但還是在世界的一個小角落祝福您能夠心想事成。</p>
+  <div class="card-footer"><span class="name">— 復列白</span><span class="time">2026/6/28 上午 12:27:56</span></div>
+  <div class="tag-row"><span class="tag">祝福</span></div>
+</article>
+<article class="message-card" data-tags="祝福 鼓勵" data-search="雖然我們不認識，但我想對你說：繼續努力加油！ 真誠的祝福">
+  <div class="quote-mark">“</div>
+  <p class="message-text">雖然我們不認識，但我想對你說：繼續努力加油！</p>
+  <div class="card-footer"><span class="name">— 真誠的祝福</span><span class="time">2026/6/28 下午 12:48:42</span></div>
+  <div class="tag-row"><span class="tag">祝福</span><span class="tag">鼓勵</span></div>
+</article>
+<article class="message-card" data-tags="其他" data-search="請你相信，世界上還有人一直支持你的信念
+。 一位普通人">
+  <div class="quote-mark">“</div>
+  <p class="message-text">請你相信，世界上還有人一直支持你的信念<br>。</p>
+  <div class="card-footer"><span class="name">— 一位普通人</span><span class="time">2026/6/28 下午 12:49:13</span></div>
+  <div class="tag-row"><span class="tag">其他</span></div>
+</article>
+<article class="message-card" data-tags="祝福 良知 鼓勵" data-search="你的堅持，讓我看見世界的希望與正義，讓我覺得未來是有希望的。 支持你的朋友">
+  <div class="quote-mark">“</div>
+  <p class="message-text">你的堅持，讓我看見世界的希望與正義，讓我覺得未來是有希望的。</p>
+  <div class="card-footer"><span class="name">— 支持你的朋友</span><span class="time">2026/6/28 下午 4:37:45</span></div>
+  <div class="tag-row"><span class="tag">祝福</span><span class="tag">良知</span><span class="tag">鼓勵</span></div>
+</article>
+<article class="message-card" data-tags="祝福 鼓勵" data-search="你的堅持，讓我看見進步與希望。 飲水思源">
+  <div class="quote-mark">“</div>
+  <p class="message-text">你的堅持，讓我看見進步與希望。</p>
+  <div class="card-footer"><span class="name">— 飲水思源</span><span class="time">2026/6/28 下午 5:28:07</span></div>
+  <div class="tag-row"><span class="tag">祝福</span><span class="tag">鼓勵</span></div>
+</article>
+<article class="message-card" data-tags="祝福" data-search="願你在黑暗中，仍能懷抱希望。 宜">
+  <div class="quote-mark">“</div>
+  <p class="message-text">願你在黑暗中，仍能懷抱希望。</p>
+  <div class="card-footer"><span class="name">— 宜</span><span class="time">2026/6/28 下午 5:51:28</span></div>
+  <div class="tag-row"><span class="tag">祝福</span></div>
+</article>
+<article class="message-card" data-tags="祝福 鼓勵" data-search="願你在黑暗中，仍能保持平靜、希望和善良自我。為你打氣加油，我知道你一直都很努力～ 小光">
+  <div class="quote-mark">“</div>
+  <p class="message-text">願你在黑暗中，仍能保持平靜、希望和善良自我。為你打氣加油，我知道你一直都很努力～</p>
+  <div class="card-footer"><span class="name">— 小光</span><span class="time">2026/6/28 下午 7:44:55</span></div>
+  <div class="tag-row"><span class="tag">祝福</span><span class="tag">鼓勵</span></div>
+</article>
+<article class="message-card" data-tags="祝福 鼓勵" data-search="願你在黑暗中，仍不放棄良善與希望，總有一天會迎來光明的未來。--娟 送出祝福的人">
+  <div class="quote-mark">“</div>
+  <p class="message-text">願你在黑暗中，仍不放棄良善與希望，總有一天會迎來光明的未來。--娟</p>
+  <div class="card-footer"><span class="name">— 送出祝福的人</span><span class="time">2026/6/28 下午 8:29:27</span></div>
+  <div class="tag-row"><span class="tag">祝福</span><span class="tag">鼓勵</span></div>
+</article>
+<article class="message-card" data-tags="其他" data-search="相信自己的善良，會成為未來的一道光芒。
+每一個在這世界出場的角色，都有他專屬位置，而不是隨意設定的。 mira">
+  <div class="quote-mark">“</div>
+  <p class="message-text">相信自己的善良，會成為未來的一道光芒。<br>每一個在這世界出場的角色，都有他專屬位置，而不是隨意設定的。</p>
+  <div class="card-footer"><span class="name">— Mira</span><span class="time">2026/6/28 下午 10:26:30</span></div>
+  <div class="tag-row"><span class="tag">其他</span></div>
+</article>
+<article class="message-card" data-tags="良知" data-search="伸張正義之生命即將迎接天亮✌️ 一位普通人">
+  <div class="quote-mark">“</div>
+  <p class="message-text">伸張正義之生命即將迎接天亮✌️</p>
+  <div class="card-footer"><span class="name">— 一位普通人</span><span class="time">2026/6/29 上午 9:42:26</span></div>
+  <div class="tag-row"><span class="tag">良知</span></div>
+</article>
+<article class="message-card" data-tags="真善忍 鼓勵" data-search="我想對你說：你們的堅忍照亮了黑暗，世界因此充滿真善忍！！ 相信善良的人">
+  <div class="quote-mark">“</div>
+  <p class="message-text">我想對你說：你們的堅忍照亮了黑暗，世界因此充滿真善忍！！</p>
+  <div class="card-footer"><span class="name">— 相信善良的人</span><span class="time">2026/6/29 下午 2:38:40</span></div>
+  <div class="tag-row"><span class="tag">真善忍</span><span class="tag">鼓勵</span></div>
+</article>
+<article class="message-card" data-tags="良知" data-search="願真相早日被看見，神佛護祐您與一切善德之人。 台南王女士">
+  <div class="quote-mark">“</div>
+  <p class="message-text">願真相早日被看見，神佛護祐您與一切善德之人。</p>
+  <div class="card-footer"><span class="name">— 台南王女士</span><span class="time">2026/6/29 下午 3:01:36</span></div>
+  <div class="tag-row"><span class="tag">良知</span></div>
+</article>
+<article class="message-card" data-tags="祝福 鼓勵" data-search="你的勇敢令人感佩
+你的堅持令人敬重
+你的善良令人動容
+願平安常伴，願希望長存。 台南郭小姐">
+  <div class="quote-mark">“</div>
+  <p class="message-text">你的勇敢令人感佩<br>你的堅持令人敬重<br>你的善良令人動容<br>願平安常伴，願希望長存。</p>
+  <div class="card-footer"><span class="name">— 台南郭小姐</span><span class="time">2026/6/30 上午 7:47:01</span></div>
+  <div class="tag-row"><span class="tag">祝福</span><span class="tag">鼓勵</span></div>
+</article>
+<article class="message-card" data-tags="其他" data-search="請你相信，世界上還有人不為利益相信善良。 小白">
+  <div class="quote-mark">“</div>
+  <p class="message-text">請你相信，世界上還有人不為利益相信善良。</p>
+  <div class="card-footer"><span class="name">— 小白</span><span class="time">2026/6/30 上午 9:02:53</span></div>
+  <div class="tag-row"><span class="tag">其他</span></div>
+</article>
+<article class="message-card" data-tags="良知" data-search="長大才知道什麼是真相，真相已慢慢被世界看到，願你們早日遠離黑暗。 善意的鼓勵">
+  <div class="quote-mark">“</div>
+  <p class="message-text">長大才知道什麼是真相，真相已慢慢被世界看到，願你們早日遠離黑暗。</p>
+  <div class="card-footer"><span class="name">— 善意的鼓勵</span><span class="time">2026/6/30 上午 9:18:37</span></div>
+  <div class="tag-row"><span class="tag">良知</span></div>
+</article>
+<article class="message-card" data-tags="祝福" data-search="雖然我們不認識，但我想對你說希望你的每一天都會很美好很開心。 板橋地方媽媽">
+  <div class="quote-mark">“</div>
+  <p class="message-text">雖然我們不認識，但我想對你說希望你的每一天都會很美好很開心。</p>
+  <div class="card-footer"><span class="name">— 板橋地方媽媽</span><span class="time">2026/6/30 下午 1:05:01</span></div>
+  <div class="tag-row"><span class="tag">祝福</span></div>
+</article>
+<article class="message-card" data-tags="鼓勵" data-search="因為相信所以踏實
+因為接受所以無懼
+因為明白所以無怨
+因為堅持所以必成 neor">
+  <div class="quote-mark">“</div>
+  <p class="message-text">因為相信所以踏實<br>因為接受所以無懼<br>因為明白所以無怨<br>因為堅持所以必成</p>
+  <div class="card-footer"><span class="name">— Neor</span><span class="time">2026/6/30 下午 2:23:35</span></div>
+  <div class="tag-row"><span class="tag">鼓勵</span></div>
+</article>
+<article class="message-card" data-tags="其他" data-search="願你在黑暗中，仍能發現真諦，走出黑暗。 關心的人">
+  <div class="quote-mark">“</div>
+  <p class="message-text">願你在黑暗中，仍能發現真諦，走出黑暗。</p>
+  <div class="card-footer"><span class="name">— 關心的人</span><span class="time">2026/6/30 下午 9:54:38</span></div>
+  <div class="tag-row"><span class="tag">其他</span></div>
+</article>
+<article class="message-card" data-tags="真善忍 祝福 良知 鼓勵" data-search="世界需要「真、善、忍」!
+你的堅持是對的!
+這些日子難為你了!
+真相已大白，光明就要到來。
+你不孤單!世上有上億人與你同在。
+我們是心心相連的。
+願你勇敢堅持!
+一起迎接美好的未來! 一份善意">
+  <div class="quote-mark">“</div>
+  <p class="message-text">世界需要「真、善、忍」!<br>你的堅持是對的!<br>這些日子難為你了!<br>真相已大白，光明就要到來。<br>你不孤單!世上有上億人與你同在。<br>我們是心心相連的。<br>願你勇敢堅持!<br>一起迎接美好的未來!</p>
+  <div class="card-footer"><span class="name">— 一份善意</span><span class="time">2026/7/1 下午 1:26:06</span></div>
+  <div class="tag-row"><span class="tag">真善忍</span><span class="tag">祝福</span><span class="tag">良知</span><span class="tag">鼓勵</span></div>
+</article>
+<article class="message-card" data-tags="祝福" data-search="請你相信，世界上還有人會看見你的好。 願你平安的人">
+  <div class="quote-mark">“</div>
+  <p class="message-text">請你相信，世界上還有人會看見你的好。</p>
+  <div class="card-footer"><span class="name">— 願你平安的人</span><span class="time">2026/7/1 下午 7:18:47</span></div>
+  <div class="tag-row"><span class="tag">祝福</span></div>
+</article>
+<article class="message-card" data-tags="祝福 鼓勵" data-search="你的堅持會讓更多的人看到世界的希望。
+---關心你的人 一份心意">
+  <div class="quote-mark">“</div>
+  <p class="message-text">你的堅持會讓更多的人看到世界的希望。<br>---關心你的人</p>
+  <div class="card-footer"><span class="name">— 一份心意</span><span class="time">2026/7/1 下午 7:39:32</span></div>
+  <div class="tag-row"><span class="tag">祝福</span><span class="tag">鼓勵</span></div>
+</article>
+<article class="message-card" data-tags="祝福 鼓勵" data-search="你的堅持會讓更多的人看到世界的希望。
+---關心你的人 剛好看到的人">
+  <div class="quote-mark">“</div>
+  <p class="message-text">你的堅持會讓更多的人看到世界的希望。<br>---關心你的人</p>
+  <div class="card-footer"><span class="name">— 剛好看到的人</span><span class="time">2026/7/1 下午 7:39:45</span></div>
+  <div class="tag-row"><span class="tag">祝福</span><span class="tag">鼓勵</span></div>
+</article>
+<article class="message-card" data-tags="良知 鼓勵" data-search="你的堅忍不懼中共打壓，讓全世界人了解迫害真相，真偉大~ 枋蓮">
+  <div class="quote-mark">“</div>
+  <p class="message-text">你的堅忍不懼中共打壓，讓全世界人了解迫害真相，真偉大~</p>
+  <div class="card-footer"><span class="name">— 枋蓮</span><span class="time">2026/7/1 下午 11:17:43</span></div>
+  <div class="tag-row"><span class="tag">良知</span><span class="tag">鼓勵</span></div>
+</article>
+<article class="message-card" data-tags="真善忍 鼓勵" data-search="堅持信仰真善忍不畏共產黨禍害令人敬佩 溫暖的心意">
+  <div class="quote-mark">“</div>
+  <p class="message-text">堅持信仰真善忍不畏共產黨禍害令人敬佩</p>
+  <div class="card-footer"><span class="name">— 溫暖的心意</span><span class="time">2026/7/2 下午 12:17:09</span></div>
+  <div class="tag-row"><span class="tag">真善忍</span><span class="tag">鼓勵</span></div>
+</article>
+<article class="message-card" data-tags="真善忍 良知" data-search="中國共產黨對信仰真善忍法輪功學員的迫害真相，值得每一個世人去了解為停止迫害盡一份心力 線上朋友">
+  <div class="quote-mark">“</div>
+  <p class="message-text">中國共產黨對信仰真善忍法輪功學員的迫害真相，值得每一個世人去了解為停止迫害盡一份心力</p>
+  <div class="card-footer"><span class="name">— 線上朋友</span><span class="time">2026/7/2 下午 12:19:01</span></div>
+  <div class="tag-row"><span class="tag">真善忍</span><span class="tag">良知</span></div>
+</article>
+<article class="message-card" data-tags="真善忍 祝福 良知 鼓勵" data-search="真善忍是人的普世價值  
+善良人不應該被迫害
+你的堅持  讓我看見真相
+願你一切平安 讓世界更光明 雪兒">
+  <div class="quote-mark">“</div>
+  <p class="message-text">真善忍是人的普世價值  <br>善良人不應該被迫害<br>你的堅持  讓我看見真相<br>願你一切平安 讓世界更光明</p>
+  <div class="card-footer"><span class="name">— 雪兒</span><span class="time">2026/7/2 下午 4:22:34</span></div>
+  <div class="tag-row"><span class="tag">真善忍</span><span class="tag">祝福</span><span class="tag">良知</span><span class="tag">鼓勵</span></div>
+</article>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer wrap">
+    <div>一句話，一盞光｜下午收集良知，晚上點亮真相</div>
+    <div>改變世界的，不是仇恨，而是不願放棄善良的人。</div>
+  </footer>
+
+  <script>
+    const searchInput = document.getElementById('searchInput');
+    const cards = Array.from(document.querySelectorAll('#messageGrid .message-card'));
+    const chips = Array.from(document.querySelectorAll('.chip'));
+    let currentFilter = '全部';
+
+    function applyFilter() {
+      const q = (searchInput.value || '').trim().toLowerCase();
+      let visible = 0;
+      cards.forEach(card => {
+        const search = card.dataset.search || '';
+        const tags = card.dataset.tags || '';
+        const okText = !q || search.includes(q);
+        const okTag = currentFilter === '全部' || tags.includes(currentFilter);
+        const show = okText && okTag;
+        card.style.display = show ? '' : 'none';
+        if (show) visible++;
+      });
+    }
+    searchInput.addEventListener('input', applyFilter);
+    chips.forEach(chip => chip.addEventListener('click', () => {
+      currentFilter = chip.dataset.filter;
+      chips.forEach(c => c.classList.toggle('active', c === chip));
+      applyFilter();
+    }));
+  </script>
+</body>
+</html>
