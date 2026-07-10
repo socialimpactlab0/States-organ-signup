@@ -1,0 +1,318 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>一句話，一盞光｜五則精選留言</title>
+  <meta name="description" content="一句話，一盞光：五則來自民眾的精選留言，送給因信仰而失去自由、仍不放棄善良的人。" />
+  <meta property="og:title" content="一句話，一盞光｜五則精選留言" />
+  <meta property="og:description" content="五則來自民眾的精選留言，願善良、良知與希望被更多人看見。" />
+  <meta property="og:type" content="website" />
+  <style>
+    :root {
+      --bg: #f7efe1;
+      --paper: #fffaf0;
+      --paper2: #fff7e7;
+      --ink: #3d2a1c;
+      --muted: #7b6247;
+      --gold: #b98232;
+      --gold2: #d7b066;
+      --line: rgba(169, 118, 48, 0.28);
+      --shadow: rgba(90, 58, 24, 0.14);
+    }
+
+    * { box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      color: var(--ink);
+      font-family: "Noto Sans TC", "Microsoft JhengHei", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+      background:
+        radial-gradient(circle at 18% 8%, rgba(255, 236, 179, 0.8), transparent 28%),
+        radial-gradient(circle at 86% 14%, rgba(255, 221, 153, 0.7), transparent 30%),
+        linear-gradient(180deg, #fff7e8 0%, var(--bg) 48%, #efe0c7 100%);
+      min-height: 100vh;
+    }
+
+    .page {
+      width: min(1040px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 42px 0 56px;
+    }
+
+    .hero {
+      position: relative;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: 30px;
+      padding: 42px 28px 36px;
+      text-align: center;
+      background:
+        linear-gradient(180deg, rgba(255,255,255,0.68), rgba(255,250,240,0.9)),
+        var(--paper);
+      box-shadow: 0 18px 42px var(--shadow);
+    }
+
+    .hero::before,
+    .hero::after {
+      content: "";
+      position: absolute;
+      width: 170px;
+      height: 170px;
+      border-radius: 999px;
+      background: rgba(215, 176, 102, 0.16);
+      filter: blur(6px);
+      z-index: 0;
+    }
+
+    .hero::before { left: -78px; top: -72px; }
+    .hero::after { right: -78px; bottom: -88px; }
+
+    .hero-inner { position: relative; z-index: 1; }
+
+    .eyebrow {
+      margin: 0 0 12px;
+      color: var(--gold);
+      font-size: 14px;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+    }
+
+    h1 {
+      margin: 0;
+      font-family: "Noto Serif TC", "PMingLiU", "Microsoft JhengHei", serif;
+      font-size: clamp(36px, 6vw, 64px);
+      line-height: 1.18;
+      letter-spacing: 0.08em;
+      color: #4a2e14;
+    }
+
+    .subtitle {
+      max-width: 720px;
+      margin: 20px auto 0;
+      font-size: clamp(16px, 2.4vw, 20px);
+      line-height: 1.9;
+      color: var(--muted);
+    }
+
+    .divider {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin: 34px auto 0;
+      max-width: 600px;
+      color: var(--gold);
+      font-size: 13px;
+      letter-spacing: 0.18em;
+      font-weight: 700;
+    }
+
+    .divider::before,
+    .divider::after {
+      content: "";
+      height: 1px;
+      flex: 1;
+      background: linear-gradient(90deg, transparent, rgba(185,130,50,.5), transparent);
+    }
+
+    .cards {
+      display: grid;
+      gap: 22px;
+      margin-top: 28px;
+    }
+
+    .card {
+      position: relative;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: 24px;
+      padding: 28px 26px 24px;
+      background:
+        linear-gradient(180deg, rgba(255,255,255,0.82), rgba(255,247,231,0.95)),
+        var(--paper2);
+      box-shadow: 0 12px 30px rgba(90, 58, 24, 0.10);
+    }
+
+    .card::before {
+      content: attr(data-number);
+      position: absolute;
+      right: 22px;
+      top: 14px;
+      font-family: Georgia, serif;
+      font-size: 76px;
+      line-height: 1;
+      color: rgba(185, 130, 50, 0.10);
+      font-weight: 700;
+    }
+
+    .message {
+      position: relative;
+      margin: 0;
+      z-index: 1;
+      font-family: "Noto Serif TC", "PMingLiU", serif;
+      font-size: clamp(20px, 2.8vw, 28px);
+      line-height: 1.85;
+      letter-spacing: 0.035em;
+      color: #3b2a1d;
+      white-space: pre-line;
+    }
+
+    .signature {
+      position: relative;
+      z-index: 1;
+      margin-top: 20px;
+      color: var(--gold);
+      font-size: 16px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-align: right;
+    }
+
+    .bottom {
+      margin-top: 32px;
+      padding: 26px 22px;
+      border-radius: 24px;
+      text-align: center;
+      background: rgba(255, 250, 240, 0.72);
+      border: 1px solid var(--line);
+    }
+
+    .bottom p {
+      margin: 0 auto;
+      max-width: 660px;
+      font-family: "Noto Serif TC", "PMingLiU", serif;
+      font-size: 20px;
+      line-height: 1.9;
+      color: #4a2e14;
+    }
+
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 12px;
+      margin-top: 22px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 46px;
+      padding: 12px 22px;
+      border-radius: 999px;
+      text-decoration: none;
+      font-weight: 800;
+      letter-spacing: 0.04em;
+      transition: transform .2s ease, filter .2s ease, background .2s ease;
+    }
+
+    .btn:hover { transform: translateY(-1px); filter: brightness(1.03); }
+
+    .btn-primary {
+      color: #fff;
+      background: linear-gradient(135deg, var(--gold), var(--gold2));
+      box-shadow: 0 10px 22px rgba(185, 130, 50, 0.28);
+    }
+
+    .btn-secondary {
+      color: #6b471b;
+      background: rgba(255,255,255,0.55);
+      border: 1px solid rgba(185,130,50,.35);
+    }
+
+    footer {
+      margin-top: 26px;
+      text-align: center;
+      color: rgba(61,42,28,0.58);
+      font-size: 13px;
+      line-height: 1.8;
+    }
+
+    @media (min-width: 820px) {
+      .cards {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .card:first-child {
+        grid-column: 1 / -1;
+      }
+    }
+
+    @media (max-width: 560px) {
+      .page { width: min(100% - 22px, 1040px); padding: 20px 0 36px; }
+      .hero { border-radius: 24px; padding: 34px 20px 30px; }
+      .subtitle { line-height: 1.8; }
+      .card { border-radius: 20px; padding: 24px 20px 22px; }
+      .message { font-size: 19px; line-height: 1.85; }
+      .signature { font-size: 15px; }
+      .actions { flex-direction: column; }
+      .btn { width: 100%; }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <section class="hero">
+      <div class="hero-inner">
+        <p class="eyebrow">五則精選留言</p>
+        <h1>一句話，一盞光</h1>
+        <p class="subtitle">
+          這些留言，送給因信仰而失去自由、仍在苦難中堅持善良的人。<br>
+          一句祝福、一份關心，也能成為照亮黑暗的光。
+        </p>
+        <div class="divider"><span>願善良被看見</span></div>
+      </div>
+    </section>
+
+    <section class="cards" aria-label="五則精選留言">
+      <article class="card" data-number="01">
+        <p class="message">你的堅持與信仰，是這世界上最珍貴的光芒，請相信你並不孤單，正義與善良終會匯聚成光，照亮回家的路。
+無論身處多麼艱難的境地，請珍重自己，你的堅韌本身就是對抗迫害最強大的力量。</p>
+        <div class="signature">—— 願你平安的人</div>
+      </article>
+
+      <article class="card" data-number="02">
+        <p class="message">身軀或許能被高牆禁錮，但堅定的靈魂與信仰終將穿透黑暗，您的堅持是善良與良知最美的見證。</p>
+        <div class="signature">—— 線上朋友</div>
+      </article>
+
+      <article class="card" data-number="03">
+        <p class="message">你的勇敢令人感佩
+你的堅持令人敬重
+你的善良令人動容
+願平安常伴，願希望長存。</p>
+        <div class="signature">—— 台南郭小姐</div>
+      </article>
+
+      <article class="card" data-number="04">
+        <p class="message">願你在黑暗中，仍能堅持善良﹑持續前進，成為照亮大家的那道光芒。</p>
+        <div class="signature">—— ant</div>
+      </article>
+
+      <article class="card" data-number="05">
+        <p class="message">願善良能傳遞到世界的每一個角落，信仰自由無所不在，正義的光能照亮被邪惡遮蔽的陰暗之處。</p>
+        <div class="signature">—— 善意的鼓勵</div>
+      </article>
+    </section>
+
+    <section class="bottom">
+      <p>
+        改變世界的，不是仇恨，<br>
+        而是不願放棄善良的人。
+      </p>
+      <div class="actions">
+        <a class="btn btn-primary" href="https://write.goodlighttaiwan.org" target="_blank" rel="noopener">我也想留下一句話</a>
+        <a class="btn btn-secondary" href="https://socialimpactlab0.github.io/States-organ-signup/" target="_blank" rel="noopener">了解《國有器官》放映</a>
+      </div>
+    </section>
+
+    <footer>
+      法輪功反迫害 27 週年良知行動<br>
+      一句話，一盞光
+    </footer>
+  </main>
+</body>
+</html>
